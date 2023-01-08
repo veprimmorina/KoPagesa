@@ -101,14 +101,14 @@ namespace FaturatService.Controllers
         }
         [HttpGet("gjoba/numri/{nrpersonal}")]
         public async Task<ActionResult<IEnumerable<Gjoba>>> GetGjobaWithNumer(string nrpersonal)
-        {            
-                return await _context.gjoba.Where(x => x.NrPersonal.Equals(nrpersonal) && x.EPaguar.Equals(false)).ToListAsync();   
-           
+        {
+            return await _context.gjoba.Where(x => x.NrPersonal.Equals(nrpersonal) && x.EPaguar.Equals(false)).ToListAsync();
+
         }
         [HttpGet("numero/gjobat/{numripersonal}")]
         public async Task<int> CountGjoba(string numripersonal)
         {
-            return await _context.gjoba.Where(x=> x.EPaguar.Equals(false) && x.NrPersonal.Equals(numripersonal)).CountAsync();
+            return await _context.gjoba.Where(x => x.EPaguar.Equals(false) && x.NrPersonal.Equals(numripersonal)).CountAsync();
         }
 
         [HttpGet("paguaj/faturen/{numripersonal}/{id}")]
@@ -126,6 +126,16 @@ namespace FaturatService.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+        [HttpGet("get/paid")]
+        public async Task<ActionResult<IEnumerable<Gjoba>>> GetPaidFine()
+        {
+            return await _context.gjoba.Where(x => x.EPaguar.Equals(true)).ToListAsync();
+        }
+        [HttpGet("get/unpaid")]
+        public async Task<ActionResult<IEnumerable<Gjoba>>> GetUnpaidFine()
+        {
+            return await _context.gjoba.Where(x => x.EPaguar.Equals(false)).ToListAsync();
         }
         private bool GjobaExists(int id)
         {
