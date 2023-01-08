@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KoPagesa;
 using KoPagesa.Models;
+using static System.Net.Mime.MediaTypeNames;
+using System.Net.Mail;
+using System.Net;
 
 namespace KoPagesa.Controllers
 {
@@ -104,6 +107,64 @@ namespace KoPagesa.Controllers
         public async Task<ActionResult<Perdoruesi>> GjejPolicin(string email)
         {
             return await _context.perdoruesi.Where(x=>x.Emaili.Equals(email)).FirstOrDefaultAsync();
+        }
+        [HttpGet("confirm/{numripersonal}/{shuma}/{pershkrimi}")]
+        public async Task<IActionResult> SendEmail(string numripersonal, int shuma, string pershkrimi)
+        {
+            var perdoruesi = await _context.perdoruesi.Where(x=> x.NumriPersonal.Equals(numripersonal)).FirstOrDefaultAsync();
+            perdoruesi.Njoftime += 1;   
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("veprimm1@gmail.com");
+            mailMessage.To.Add(perdoruesi.Emaili);
+            mailMessage.Subject = "Njoftim i ri";
+            mailMessage.Body = "I nderuar <b>"+perdoruesi.Emri+" "+perdoruesi.Mbiemri+"</b>.<br><br>" +
+                " Keni pranuar një gjobë të re për shumën "+shuma+ "€ me pershkrimin <b>"+pershkrimi+"</b>.<br> Paguani menjëherë përmes aplikacionit" +
+                " KOPagesa.<br><br><br>*Kujdes: Vini rripin e sigurisë! Respekto shpejtësinë maksimale! Shpëto jetë! ";
+            mailMessage.IsBodyHtml = true;
+
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("veprimm1@gmail.com", "wppdhyddblkwswte"),
+                EnableSsl = true,
+
+            };
+            smtpClient.Send(mailMessage);
+            return Ok();
+        }
+        [HttpGet("ekziston/{numripersonal}/{email}")]
+        public async Task<Boolean> Ekziston(string numripersonal, string email)
+        {
+            var perdoruesi = await _context.perdoruesi.Where(x => x.NumriPersonal.Equals(numripersonal) || x.Emaili.Equals(email)).FirstOrDefaultAsync();
+
+            if (perdoruesi != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        [HttpGet("dergo/kodin/{email}/{kodi}")]
+        public async Task<IActionResult> DergoKodin(string email, string kodi)
+        {
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("veprimm1@gmail.com");
+            mailMessage.To.Add(email);
+            mailMessage.Subject = "Njoftim i ri";
+            mailMessage.Body = "Kodi juaj konfirmues për pergjistrim në platformën KOPagesa: <b>" + kodi + "</b>";
+            mailMessage.IsBodyHtml = true;
+
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("veprimm1@gmail.com", "wppdhyddblkwswte"),
+                EnableSsl = true,
+
+            };
+            smtpClient.Send(mailMessage);
+            return Ok();
         }
         private bool PerdoruesiExists(int id)
         {

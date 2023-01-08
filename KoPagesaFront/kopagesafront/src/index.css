@@ -1,0 +1,146 @@
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#root{
+  background-color: rgb(220,220,220);
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.second-picture{
+  opacity: 30%;
+}
+.license{
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(224,151,226,1) 35%, rgba(0,212,255,1) 100%);
+}
+.kosovo-badge{
+  position: absolute;
+  left: 50;
+  opacity: 30%;
+  top: 100px;
+  left: 350px;
+}
+.deactivated{
+  border: 1px solid red;
+}
+.kosovo{
+  width: 18px;
+  background-color: grey;
+  background-image: url('https://kryeministri.rks-gov.net/wp-content/uploads/2022/07/STEMA.png');
+  background-size: 20px;
+}
+.square-holder {
+  padding:30px;
+  border: 1px solid #cecece;
+  align-items: center;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom:20px;
+  background-color:#f1f1f1;
+  min-height:200px
+}
+
+.square-holder img {
+  max-width:100%;
+  filter: grayscale(100%);
+  transition: all 0.3s;
+}
+
+.square-holder:hover img{
+  filter:none;
+}
+.baners{
+  position: relative;
+  bottom: 30px;
+}
+.baner{
+  width: 180px;
+}
+.baner-1{
+  background-image: url('https://s3.ap-south-1.amazonaws.com/img1.creditmantri.com/community/article/mobile_credit-card-bills-online-payment-methods.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.baner-2{
+  background-image: url('https://cdn.gobankingrates.com/wp-content/uploads/2020/02/Illustration-of-laptop-smartphone-credit-cards-payment-iStock-1133420256.jpg');
+  background-size: 100% ;
+  background-repeat: no-repeat;
+}
+.baner-3{
+  background-image: url('https://www.alacriti.com/wp-content/uploads/2014/11/AlacritiHowBillPaymentExceptionItemsImpactElectronicRoutedPayments11614.jpg');
+  background-size: 100% ;
+  background-repeat: no-repeat;
+}
+.main-body {
+  padding: 15px;
+}
+.card {
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+.gutters-sm {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+.mb-3, .my-3 {
+  margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+  background-color: #e2e8f0;
+}
+.h-100 {
+  height: 100%!important;
+}
+.shadow-none {
+  box-shadow: none!important;
+}
+
+.policia{
+  background-image: url('https://www.kosovopolice.com/wp-content/uploads/2020/12/dss.png');
+  background-size: 150px;
+}
+.stripe{
+  background-image: url('https://kinsta.com/wp-content/uploads/2017/01/stripe-for-wordpress.png');
+  background-size: 500px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.payment{
+  background-image: url('https://percenta-nanoproducts.com/wp-content/uploads/2021/07/paypal-visa-mastercard.png');
+  background-repeat: no-repeat;
+  margin-left: 25px;
+  background-size: 300px;
+}

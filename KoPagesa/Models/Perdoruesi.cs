@@ -13,12 +13,16 @@ namespace KoPagesa.Models
 
         [Column(TypeName = "nvarchar (25)")]
         public string Mbiemri { get; set; }
+        [Column (TypeName =("nvarchar(30)"))]
+        public string NumriPersonal { get; set; }
 
         [Column(TypeName = "nvarchar (25)")]
         public string Emaili { get; set; }
 
         [Column(TypeName = "nvarchar (30)")]
         public string Fjalkalimi { get; set; }
+        [Column]
+        public int Njoftime { get; set; }
         [Column]
         public int Roli { get; set; }
 
