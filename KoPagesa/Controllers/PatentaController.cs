@@ -99,6 +99,11 @@ namespace KoPagesa.Controllers
 
             return NoContent();
         }
+        [HttpGet("get/{search}")]
+        public async Task<ActionResult<IEnumerable<Patenta>>> GetPatentaSearch(string search)
+        {
+            return await _context.patenta.Where(x => x.NumriPersonal.Equals(search) || x.Emri.Equals(search)).ToListAsync();
+        }
 
         private bool PatentaExists(int id)
         {
