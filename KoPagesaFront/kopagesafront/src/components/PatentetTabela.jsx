@@ -1,9 +1,69 @@
 import { MDBBadge, MDBBtn } from 'mdb-react-ui-kit'
 import { Link } from "react-router-dom";
-import React from 'react'
+import Switch from "react-switch";
+import React, { useState } from 'react'
+import { Button, Form, FormControl, Modal } from 'react-bootstrap';
+import axios from 'axios';
 
 function PatentetTabela({patenti}) {
+  const [polici, setPolici] = useState()
+    const [numriPersonal,setNumriPersonal] = useState()
+    const [adresa,setAdresa] = useState()
+    const [data,setData] = useState()
+    const [emri,setEmri] = useState()
+    const [pershkrimi,setPershkrimi] = useState()
+    const [mbiemri,setMbiemri] = useState()
+    const [pagesa, setPagesa] = useState()
+    const [ora, setOra]= useState()
+    const [showM, setShowM] = useState(false)
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear()
+    const time = newDate.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const handleClose = () => {
+        setShowM(false)
+    }
+    const denimiForm = (patenti)=> {
+      setEmri(patenti.emri)
+      setNumriPersonal(patenti.numriPersonal)
+      setMbiemri(patenti.mbiemri)
+      
+      setShowM(true)
+    }
+    const shtoDenimin = () => {
+      var Fatura = {
+        pershkrimi: pershkrimi,
+        nrPersonal: numriPersonal,
+        data: date+"/"+month+"/"+year,
+        koha: time,
+        adresa: adresa,
+        denimi: pagesa,
+        ePaguar: false
+    }
+    axios.post("https://localhost:7000/api/Gjoba",Fatura).then(response=>{
+        axios.get("https://localhost:7235/api/Perdoruesi/confirm/"+Fatura.nrPersonal+"/"+Fatura.denimi+"/"+Fatura.pershkrimi).then(response=>{
+          console.log(response.data)
+        })
+    })
+    alert("U Shtua me sukses")
+    setShowM(false)
+    }
+  const deaktivizo = (id) => {
+    axios.get("https://localhost:7235/api/Patenta/deaktivizo/"+id).then(response=>{
+      console.log(response.data)
+    })
+  }
+  const aktivizo = (id) => {
+    axios.get("https://localhost:7235/api/Patenta/aktivizo/"+id).then(response=>{
+      console.log(response.data)
+    })
+  }
   return (
+    <>
     <tr>
           <td>
               <img
@@ -35,7 +95,49 @@ function PatentetTabela({patenti}) {
                 </MDBBtn>
               </Link>
           </td>
+          <td>{patenti.eAktivizuar==true ? 
+             <Button variant="danger" onClick={()=>deaktivizo(patenti.id)}>Deaktivizo</Button>
+             : <Button variant="success" onClick={()=>aktivizo(patenti.id)}>Aktivizo</Button>
+          }</td>
+          <td><Button variant="warning" onClick={()=>denimiForm(patenti)}>Shto Denim</Button></td>
         </tr>
+        <Modal show={showM} onHide={handleClose} className='text-center mt-5'>              
+     <Modal.Header closeButton className='policia'>
+      <Modal.Title className='text-center'>Gjoba</Modal.Title>
+     </Modal.Header>
+    <Modal.Body className="modal-payment">                  
+      <Form>
+        <Form.Group>
+          <Form.Label>Numri Personal:</Form.Label>
+          <Form.Control type="text" value={numriPersonal}  disabled readOnly></Form.Control>
+          <Form.Label>Emri:</Form.Label>
+          <Form.Control type="text" value={emri}  disabled readOnly></Form.Control>
+          <Form.Label>Mbiemri:</Form.Label>
+          <Form.Control type="text" value={mbiemri}  disabled readOnly></Form.Control>
+          </Form.Group>
+          <Form.Label>Përshkrimi:</Form.Label>
+          <textarea className='form-control' onChange={(e)=> setPershkrimi(e.target.value)} ></textarea>
+          <Form.Label>Pagesa:</Form.Label>
+          <Form.Control type="text" onChange={(e)=> setPagesa(e.target.value)}></Form.Control>
+          <Form.Label>Data:</Form.Label>
+          <Form.Control type="text" value={date+"/"+month+"/"+year} disabled readOnly></Form.Control>
+          <Form.Label>Ora:</Form.Label>
+          <Form.Control type="text" value={time} disabled readOnly></Form.Control>
+          <Form.Label>Adresa:</Form.Label>
+          <Form.Control type="text" onChange={(e)=> setAdresa(e.target.value)}></Form.Control>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+                        Anulo
+        </Button>    
+        <Button variant="primary" onClick={()=>shtoDenimin()}>
+          Shto denimin
+        </Button>
+                     
+      </Modal.Footer>
+    </Modal>
+        </>
   )
 }
 

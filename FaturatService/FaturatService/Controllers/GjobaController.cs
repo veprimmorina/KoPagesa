@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FaturatService;
 using FaturatService.Models;
+using System.Collections;
 
 namespace FaturatService.Controllers
 {
@@ -136,6 +137,16 @@ namespace FaturatService.Controllers
         public async Task<ActionResult<IEnumerable<Gjoba>>> GetUnpaidFine()
         {
             return await _context.gjoba.Where(x => x.EPaguar.Equals(false)).ToListAsync();
+        }
+        [HttpGet("get/unpaid/{search}")]
+        public async Task<ActionResult<IEnumerable<Gjoba>>> GetUnpaidSearch(string search)
+        {
+            return await _context.gjoba.Where(x=>x.EPaguar.Equals(false) && x.NrPersonal.Equals(search)).ToListAsync();
+        }
+        [HttpGet("get/paid/{numripersonal}")]
+        public async Task<ActionResult<IEnumerable<Gjoba>>> GetPaidWithNumber(string numripersonal)
+        {
+            return await _context.gjoba.Where(x => x.NrPersonal.Equals(numripersonal) && x.EPaguar.Equals(true)).ToListAsync();
         }
         private bool GjobaExists(int id)
         {

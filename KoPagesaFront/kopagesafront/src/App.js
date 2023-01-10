@@ -13,6 +13,7 @@ import Gjobat from "./components/Gjobat";
 import GjobatPolice from "./components/GjobatPolice";
 import PolicetProfile from "./components/PolicetProfile";
 import PoliciaDashboard from "./components/PoliciaDashboard";
+import Regjistrohu from "./components/Regjistrohu";
 
 
 function App() {
@@ -26,6 +27,7 @@ return(
       <Route path="/policet/profile" element={<PolicetProfile />}></Route>
       <Route path="/gjobat/:numripersonal" element={<GjobatPolice />}></Route>
       <Route path="/dashboard/policet" element={<PoliciaDashboard />}></Route>
+      <Route path="/regjistrohu" element={<Regjistrohu />}></Route>
     </Routes>
   </BrowserRouter>
 )
