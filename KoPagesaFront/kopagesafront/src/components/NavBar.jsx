@@ -14,6 +14,7 @@ import {
     MDBCollapse,
     MDBBtn
   } from 'mdb-react-ui-kit';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
     const [showBasic, setShowBasic] = useState(true);
@@ -41,8 +42,8 @@ function NavBar() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">Log In</Nav.Link>
-            
+            <Link to={'/regjistrohu'}>Regjistrohu</Link>
+            <Nav.Link>Kycu</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

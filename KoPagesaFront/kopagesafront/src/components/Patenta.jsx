@@ -2,9 +2,10 @@ import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { Card } from 'react-bootstrap'
+import { Button, Card, Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
+import ShfaqDenimet from './ShfaqDenimet'
 
 function Patenta() {
     const {id} = useParams()
@@ -12,59 +13,67 @@ function Patenta() {
     const [nrGjobave, setNrGjobave] = useState();
     const [gjobat, setGjobat] = useState();
     const [nrPersonal, setNrPersonal] = useState();
+    const [shfaqDenimetDiv, setShfaqDenimetDiv] = useState(false)
+    const [buton, setButon] = useState("")
     useEffect(()=>{
         axios.get("https://localhost:7235/api/Patenta/"+id).then(response=>{
           setPerdoruesi(response.data)
-          setNrPersonal(response.data.numriPersonal)
+          console.log(response.data)
+          axios.get("https://localhost:7000/api/Gjoba/numero/gjobat/"+response.data.numriPersonal).then(response=>{
+          setNrGjobave(response.data)
           console.log(response.data)
         })
-        axios.get("https://localhost:7000/api/Gjoba/numero/gjobat/12345678910").then(response=>{
-          setNrGjobave(response.data)
-        })
-        axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/12345678910").then(response=>{
-        setGjobat(response.data)
         })
     },[])
+    const shfaqDenimet = (nrPersonal) => {
+      axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/"+nrPersonal).then(response=>{
+        setGjobat(response.data)
+        console.log(response.data)
+        })
+        setShfaqDenimetDiv(true)
+        setButon('d-none')
+    }
   return (
-   
-    <div className=''>
-      {perdoruesi!=undefined ? 
-      <>
-       {perdoruesi.eAktivizuar==true ? <p></p> : 
-        <b className='text-danger'>Patent shoferi me Nr.Personal {perdoruesi.numriPersonal} eshte i deaktivizuar</b>
-      }
-          <Card>
-        {nrGjobave==0 ? "" : nrGjobave==1 ? <Link to="/gjobat/12345678910"><p>1 gjobë e pa paguar</p> </Link>:<Link to="/gjobat/"{...nrPersonal}><p>{nrGjobave} gjoba pa paguar</p></Link>}
-      </Card>
-      <div className='row w-50 license'>        
-        <div className='col '>
-        <img src='https://cdn.britannica.com/18/114418-004-2A12F087/Flag-Kosovo.jpg' width="90" height="50"/> 
-        </div>
-        <div className='col'>
-          <b className='text-primary '>Patent Shoferi</b>
-          <b className='text-warning d-block'>Republika e Kosoves</b>
+   <>
+   {
+    perdoruesi!=undefined ?
+    <>
+    {nrGjobave==1 ? <><b className='text-danger'>1 Gjobë pa paguar</b><Button variant='dark' >Shfaq</Button></> : nrGjobave==0 ? "" : <><b className='text-center text-danger'>{nrGjobave+" gjoba pa paguar"}</b><Button variant='danger' className={buton+' ml-5'} onClick={()=> shfaqDenimet(perdoruesi.numriPersonal)}>Shfaq</Button></>}
+   <div className='row main'>
+    <div className='col-md'>
+    <Card className={perdoruesi.eAktivizuar==false ?' license shadow' : "license shadow"}>
+    {perdoruesi.eAktivizuar==true ? <p></p> : 
+            <div className='deactivated rounded bg-danger text-white text-center'>
+              <b className=''>Patent shoferi eshte i deaktivizuar</b>
+            </div>
+          }
+          <Card.Header className='d-flex justify-content-between'>
+          <img src='https://cdn.britannica.com/18/114418-004-2A12F087/Flag-Kosovo.jpg' width="90" height="50"/> 
+          <div>
+            <b className='text-primary '>Patent Shoferi</b>
+            <b className='text-warning d-block'>Republika e Kosoves</b>
           </div>
-        <div className=' col'>
+          <div>
           <b className='text-primary '>Driving License</b>
           <b className='text-warning d-block'>Republic of Kosovo</b>
         </div>
-       
-      </div>
-      <div className='d-flex w-50 license main '>
-        <div className='kosovo'></div>
-        <img src={perdoruesi.fotografia} width="300px" className='mt-5 '/>
-        <div className='mt-5'>
+          </Card.Header>
+          <Card.Body>
+          <div className='d-flex'>
+            {perdoruesi!=undefined ? 
+            <>
+            <div>
+      
+          <img src={perdoruesi.fotografia} width="300px" className='mt-5 '/>
+          </div>
+          <div className='mt-5'>
           <p className=''>1. <b>{perdoruesi.mbiemri}</b></p>
           <p className=''>2. <b>{perdoruesi.emri}</b></p>
           <div className='d-flex justify-content-between'>
           <p className=''>3. <b>{perdoruesi.dataLindjes}</b></p>
           <b className=''>{perdoruesi.komuna}</b>
           </div>
-          {perdoruesi.eAktivizuar==true ? <p></p> : 
-            <div className='deactivated rounded'>
-              <b className='text-danger'>Patent shoferi eshte i deaktivizuar</b>
-            </div>
-          }
+          
           <div className='d-flex justify-content-between'>     
           <p className=''>4.a <b>{perdoruesi.dataLeshimit}</b></p>
           <p>4b.<b className='ml-3'>{perdoruesi.dataSkadences}</b></p>
@@ -72,10 +81,11 @@ function Patenta() {
           </div>
           <p>4c.<b>MPB/MUP/MIA</b></p>
           <p>4d.<b>{perdoruesi.numriPersonal}</b></p>
-        </div>
-
-      </div>
-      <div className='license w-50 d-flex justify-content-between'>
+          </div>
+          </> : <p></p>}
+          </div>
+        
+          <div className=' d-flex justify-content-between'>
       <div className='kosovo'></div>
         <div>
             <img src={perdoruesi.fotografia} width="90" height="50" className='mt-3 second-picture'/> 
@@ -87,9 +97,30 @@ function Patenta() {
         <div>
         </div>
       </div>
-   </> : <div> </div>}
+          </Card.Body>
+          
+    </Card>
     </div>
-        
+    <div className='col-md text-center'>
+          {shfaqDenimetDiv && gjobat !=undefined  ?
+            <>
+            <b>Gjobat</b>
+            <Table striped border="true" hover variant='danger'>
+              <tbody>
+              {gjobat.map(gjoba=>(
+                <ShfaqDenimet key={gjoba+gjoba.id} denimi={gjoba} />
+              ))}
+              </tbody>
+            </Table>
+              </>  
+                : <p></p>
+          
+          }
+    </div>
+   </div>
+  </>
+: <p></p>}
+    </>
   )
 }
 

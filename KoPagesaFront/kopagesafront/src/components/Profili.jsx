@@ -1,18 +1,22 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, NavDropdown } from 'react-bootstrap'
 import Gjobat from './Gjobat'
+import GjobatEPaguara from './GjobatEPaguara';
 
 function Profili() {
 
   const [gjobat, setGjobat] = useState();
+  const [gjobatEPaguara, setGjobatEPaguara] = useState();
 
   useEffect(()=>{
     axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/12345678910").then(response=>{
       setGjobat(response.data)
     })
+    axios.get("https://localhost:7000/api/Gjoba/get/paid/12345678910").then(response=>{
+      setGjobatEPaguara(response.data)
+    })
    },[])
-
   return (
     <>
     <div class="container">
@@ -22,6 +26,17 @@ function Profili() {
               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
               <li class="breadcrumb-item"><a >User</a></li>
               <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+              <li className='breadcrumb-item'>
+              <i className="bi bi-bell-fill"></i>
+              <NavDropdown title="" id="collasible-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+            </NavDropdown>
+              </li>
             </ol>
           </nav>    
           <div class="row gutters-sm">
@@ -133,27 +148,13 @@ function Profili() {
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                      <small>Web Design</small>
-                      <div class="progress mb-3" style={{height: "5px"}}>
-                        <div class="progress-bar bg-primary" role="progressbar" style={{width: "80%"}} aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Website Markup</small>
-                      <div class="progress mb-3" style={{height: "5px"}}>
-                        <div class="progress-bar bg-primary" role="progressbar" style={{width: "72%"}} aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>One Page</small>
-                      <div class="progress mb-3" style={{height: "5px"}}>
-                        <div class="progress-bar bg-primary" role="progressbar" style={{width: "89%"}} aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Mobile Template</small>
-                      <div class="progress mb-3" style={{height: "5px"}}>
-                        <div class="progress-bar bg-primary" role="progressbar" style={{width: "55%"}} aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Backend API</small>
-                      <div class="progress mb-3" style={{height: "5px"}}>
-                        <div class="progress-bar bg-primary" role="progressbar" style={{width: "66%"}} aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Gjobat e paguara</h6>
+                      {
+                        gjobatEPaguara!=undefined ?
+                        gjobatEPaguara.map(gjoba=>(
+                          <GjobatEPaguara key={gjoba+gjoba.id} gjoba={gjoba} />
+                        )) : <p></p>
+                      }
                     </div>
                   </div>
                 </div>

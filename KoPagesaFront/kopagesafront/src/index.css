@@ -30,6 +30,9 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(224,151,226,1) 35%, r
 }
 .deactivated{
   border: 1px solid red;
+  position: relative;
+  top: 280px;
+  
 }
 .kosovo{
   width: 18px;
@@ -143,4 +146,7 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(224,151,226,1) 35%, r
   background-repeat: no-repeat;
   margin-left: 25px;
   background-size: 300px;
+}
+.main{
+  padding-bottom: 150px;
 }
