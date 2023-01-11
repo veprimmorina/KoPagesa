@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -15,10 +15,42 @@ import {
     MDBBtn
   } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function NavBar() {
     const [showBasic, setShowBasic] = useState(true);
-
+    const [user,setUser] = useState()
+    const [showU, setShowU] = useState()
+    useEffect(()=>{
+      let name = "cname" + "=";
+      let cn="";
+      let ca = document.cookie.split(';');
+      if(ca==""){
+        setShowU(true)
+      }else{
+        setShowU(false)
+      }
+      for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        cn=c.substring(name.length, c.length);
+        
+        }
+      }
+      axios.get("https://localhost:7235/api/Perdoruesi/decrypt/"+cn).then(response=>{
+        setUser(response.data.emri+" "+response.data.mbiemri)  
+    })
+  })
+  const logOut =()=>{
+    axios.post("https://localhost:7235/api/Perdoruesi/logout").then(response=>{
+      document.cookie = "cname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    })
+    window.location.href="http://localhost:3000"
+  }
+  
     return (
       <header>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -42,8 +74,21 @@ function NavBar() {
             </NavDropdown>
           </Nav>
           <Nav>
+            {showU==false ? 
+            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+            <Link to={"/profili"}>Profili</Link>
+            
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={()=>logOut()}>
+              Ckycu
+            </NavDropdown.Item>
+          </NavDropdown>
+            : 
+            <>
             <Link to={'/regjistrohu'}>Regjistrohu</Link>
-            <Nav.Link>Kycu</Nav.Link>
+            <Link to={'/kycu'}>Kycu</Link>
+            </>
+          }
           </Nav>
         </Navbar.Collapse>
       </Container>
