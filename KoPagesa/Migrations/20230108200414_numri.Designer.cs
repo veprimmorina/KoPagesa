@@ -3,6 +3,7 @@ using KoPagesa;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoPagesa.Migrations
 {
     [DbContext(typeof(PerdoruesitContext))]
-    partial class PerdoruesitContextModelSnapshot : ModelSnapshot
+    [Migration("20230108200414_numri")]
+    partial class numri
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,9 +95,6 @@ namespace KoPagesa.Migrations
                     b.Property<string>("Mbiemri")
                         .IsRequired()
                         .HasColumnType("nvarchar (25)");
-
-                    b.Property<int>("Njoftime")
-                        .HasColumnType("int");
 
                     b.Property<string>("NumriPersonal")
                         .IsRequired()

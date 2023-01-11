@@ -104,7 +104,25 @@ namespace KoPagesa.Controllers
         {
             return await _context.patenta.Where(x => x.NumriPersonal.Equals(search) || x.Emri.Equals(search)).ToListAsync();
         }
+        [HttpGet("deaktivizo/{id}")]
+        public async Task<IActionResult> Deactivate(int id)
+        {
+            var patenta = await _context.patenta.FindAsync(id);
+            patenta.EAktivizuar = false;
+            _context.patenta.Update(patenta);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
+        [HttpGet("aktivizo/{id}")]
+        public async Task<IActionResult> Activate(int id)
+        {
+            var patenta = await _context.patenta.FindAsync(id);
+            patenta.EAktivizuar = true;
+            _context.patenta.Update(patenta);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
         private bool PatentaExists(int id)
         {
             return _context.patenta.Any(e => e.Id == id);
