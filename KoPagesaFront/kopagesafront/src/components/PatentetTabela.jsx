@@ -120,7 +120,7 @@ function PatentetTabela({patenti}) {
           <Form.Label>Pagesa:</Form.Label>
           <Form.Control type="text" onChange={(e)=> setPagesa(e.target.value)}></Form.Control>
           <Form.Label>Data:</Form.Label>
-          <Form.Control type="text" value={date+"/"+month+"/"+year} disabled readOnly></Form.Control>
+          <Form.Control type="text" value={year+"/"+month+"/"+date} disabled readOnly></Form.Control>
           <Form.Label>Ora:</Form.Label>
           <Form.Control type="text" value={time} disabled readOnly></Form.Control>
           <Form.Label>Adresa:</Form.Label>

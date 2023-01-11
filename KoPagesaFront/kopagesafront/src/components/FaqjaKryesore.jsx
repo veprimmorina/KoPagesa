@@ -2,6 +2,7 @@ import React from 'react'
 import Banerat from './Banerat'
 import NavBar from './NavBar'
 import Partneret from './Partneret'
+import Permbajtja from './Permbajtja'
 
 function FaqjaKryesore() {
   return (
@@ -9,6 +10,7 @@ function FaqjaKryesore() {
     <NavBar />
     <Banerat />
     <Partneret />
+    <Permbajtja />
     </>
   )
 }

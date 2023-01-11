@@ -41,7 +41,8 @@ function Gjobat() {
 
   return (
     <>
-    <div className='bg-danger text-center text-white mt-3'>
+    <div className='fine'>
+    <div className='bg-danger text-center text-white mt-3 rounded'>
       { 
       gjobat.map(gjoba=>(<GjobatId key={gjoba+gjoba.id} gjoba={gjoba} />))
     }
@@ -113,7 +114,7 @@ function Gjobat() {
           }
         </Modal>
  : <p></p>}
-                </>
+               </div> </>
         
   )
 }

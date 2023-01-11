@@ -14,6 +14,7 @@ import GjobatPolice from "./components/GjobatPolice";
 import PolicetProfile from "./components/PolicetProfile";
 import PoliciaDashboard from "./components/PoliciaDashboard";
 import Regjistrohu from "./components/Regjistrohu";
+import Kycu from "./components/Kycu";
 
 
 function App() {
@@ -28,6 +29,7 @@ return(
       <Route path="/gjobat/:numripersonal" element={<GjobatPolice />}></Route>
       <Route path="/dashboard/policet" element={<PoliciaDashboard />}></Route>
       <Route path="/regjistrohu" element={<Regjistrohu />}></Route>
+      <Route path="/kycu" element={<Kycu />}></Route>
     </Routes>
   </BrowserRouter>
 )

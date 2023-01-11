@@ -141,12 +141,31 @@ namespace FaturatService.Controllers
         [HttpGet("get/unpaid/{search}")]
         public async Task<ActionResult<IEnumerable<Gjoba>>> GetUnpaidSearch(string search)
         {
-            return await _context.gjoba.Where(x=>x.EPaguar.Equals(false) && x.NrPersonal.Equals(search)).ToListAsync();
+            return await _context.gjoba.Where(x => x.EPaguar.Equals(false) && x.NrPersonal.Equals(search)).ToListAsync();
         }
         [HttpGet("get/paid/{numripersonal}")]
         public async Task<ActionResult<IEnumerable<Gjoba>>> GetPaidWithNumber(string numripersonal)
         {
             return await _context.gjoba.Where(x => x.NrPersonal.Equals(numripersonal) && x.EPaguar.Equals(true)).ToListAsync();
+        }
+        [HttpGet("get/by/date/{date}")]
+        public async Task<ActionResult<IEnumerable<Gjoba>>> GetByDate(string date)
+        {
+            return await _context.gjoba.Where(x => x.Data.Equals(date)).ToListAsync();
+        }
+        [HttpGet("get/stats")]
+
+        public async Task<string> GetStats()
+        {
+            DateTime now = DateTime.Now;
+            now.ToString("yyyy-mm-dd");
+            var nrGjobave = await _context.gjoba.CountAsync();
+            var nrGjobavePaguar = await _context.gjoba.Where(x => x.EPaguar.Equals(true)).CountAsync();
+            var nrGjobavePaPaguar = await _context.gjoba.Where(x => x.EPaguar.Equals(false)).CountAsync();
+            var gjobaSot = await _context.gjoba.Where(x=> x.Data.Equals(now)).CountAsync();
+            string total = nrGjobave + ";" + nrGjobavePaguar + ";" + nrGjobavePaPaguar+";"+gjobaSot;
+
+            return total;
         }
         private bool GjobaExists(int id)
         {

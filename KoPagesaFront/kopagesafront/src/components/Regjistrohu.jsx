@@ -25,37 +25,98 @@ function Regjistrohu() {
     const [errorMessage, setErrorMessage] = useState("")
     const [kodi, setKodi] = useState()
     const [kodiKonfirmues, setKodiKonfirmues] = useState()
+    const [shtoKartel,setShtoKartel] = useState("")
+    const [kartela,setKartela] = useState(false)
+    const [teDhenat, setTeDhenat]=useState("d-none")
+    const [cardNumber, setCardNumber] = useState("")
+    const [cardHolderName, setCardHolderName] = useState("")
+    const [expiration, setExpiration]=useState("")
+    const [CVC, setCVC] = useState("")
+    const date=new Date();
+    var month=date.getMonth()+1;
+    var year=date.getFullYear();
     const next = () => {
+      if(kartela==true){
+      if(cardNumber!="4242424242424242"){
+        setErrorMessage('Invalid Card Number!')
+      }else if(cardHolderName==""){
+        setErrorMessage('Card holder name can not be blank!')
+      }else if(expiration==""||parseInt(expiration.substring(3,7))<parseInt(year)||parseInt(expiration.substring(0,2))<parseInt(month)||parseInt(expiration.substring(0,2))>12){
+        setErrorMessage('Expiration card!')
+      }else if(CVC.length<3){
+        setErrorMessage('Your CVC should be exactly 3 digits!')
+      }else{
+        setErrorMessage('')
+        setTeDhenat("d-none")
+        setShtoKartel("")
         let kodiK=(111111+Math.random()*(999999-111111)).toFixed(0)
         setKodi(kodiK)
         axios.get("https://localhost:7235/api/Perdoruesi/ekziston/"+numriPersonal+"/"+emailAdresa).then(response=>{
            if(response.data==true){
             setErrorMessage("Ekzison nje perdorues me keto kredenciale!")
-        
            }else{
             setFirstPage(!firstPage)
             setErrorMessage("")
             axios.get("https://localhost:7235/api/Perdoruesi/dergo/kodin/"+emailAdresa+"/"+kodiK)
            } 
         })
-        
+      }
+    }else{
+      let kodiK=(111111+Math.random()*(999999-111111)).toFixed(0)
+        setKodi(kodiK)
+        axios.get("https://localhost:7235/api/Perdoruesi/ekziston/"+numriPersonal+"/"+emailAdresa).then(response=>{
+           if(response.data==true){
+            setErrorMessage("Ekzison nje perdorues me keto kredenciale!")
+           }else{
+            setFirstPage(!firstPage)
+            setErrorMessage("")
+            axios.get("https://localhost:7235/api/Perdoruesi/dergo/kodin/"+emailAdresa+"/"+kodiK)
+           } 
+        })
     }
+  }
     const regjistrohu = () => {
         if(kodiKonfirmues==kodi){
+  
+        var Customer = {
+          email: emailAdresa,
+          name: emri+" "+mbiemri,
+          creditCard: {
+            name: cardHolderName,
+            cardNumber: cardNumber,
+            expirationYear: expiration.substring(3,7),
+            expirationMonth: expiration.substring(0,2),
+            cvc: CVC
+        }
+        }
+        axios.post("https://localhost:7208/api/Stripe/customer/add",Customer).then(res=>{
+         
         var Perdoruesi ={
             emri: emri,
             mbiemri: mbiemri,
             numriPersonal: numriPersonal,
             emaili: emailAdresa,
             fjalkalimi: fjalkalimin,
+            numriKarteles: cardNumber,
+            dataSkadimit: expiration,
+            CVC: CVC,
+            mbajtesiKarteles: cardHolderName,
+            kartelaId: res.data.customerId
         }
         axios.post("https://localhost:7235/api/Perdoruesi",Perdoruesi).then(response=>{
-            console.log(response.data)
-            setErrorMessage("")
+          console.log(response.data)
+          setErrorMessage("")
+      })
         })
+       
     }else{
         setErrorMessage("Kodi i dhënë gabim")
     }
+    }
+    const kartelaDiv = ()=> {
+      setShtoKartel("d-none")
+      setKartela(true)
+      setTeDhenat("order-2 order-lg-1 d-flex flex-column align-items-center")
     }
   return (
 
@@ -96,8 +157,8 @@ function Regjistrohu() {
               <MDBInput label='Rishkruaj fjalkalimin' id='form4' type='password' onChange={(e)=> setKonfirmoFjalkalimin(e.target.value)}/>
             </div>
 
-            <div className='mb-4'>
-              <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
+            <div className={shtoKartel+' mb-4'}>
+              <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Shto kartelën bankare' onClick={()=>kartelaDiv()}/>
             </div>
             <b className='text-danger'>{errorMessage}</b>
             <MDBBtn className='mb-4' size='lg' onClick={()=>next()}>Regjistrohu</MDBBtn>
@@ -113,9 +174,27 @@ function Regjistrohu() {
             <MDBBtn className='mb-4' size='lg' onClick={()=>regjistrohu()}>Konfrimo</MDBBtn>
             </>}   
           </MDBCol>
-          <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>
+          <MDBCol md='10' lg='6' className={shtoKartel+' order-1 order-lg-2 d-flex align-items-center'}>
             <MDBCardImage src='https://static.vecteezy.com/system/resources/previews/004/999/815/original/digital-wallet-logo-design-template-with-pixel-effect-logo-concept-of-credit-card-crypto-wallet-fast-online-payment-free-vector.jpg' fluid/>
-          </MDBCol>  
+          </MDBCol>
+          <MDBCol md='10' lg='6' className={teDhenat}>
+          <div className="d-flex flex-row align-items-center mb-4">
+              <MDBIcon fas icon="key me-3" size='lg'/>
+              <MDBInput label='Numri Karteles' id='form4' type='text' onChange={(e)=> setCardNumber(e.target.value)}/>
+            </div>
+            <div className="d-flex flex-row align-items-center mb-4">
+              <MDBIcon fas icon="key me-3" size='lg'/>
+              <MDBInput label='Emri i mbajtesit te karteles' id='form4' type='text' onChange={(e)=> setCardHolderName(e.target.value)}/>
+            </div>
+            <div className="d-flex flex-row align-items-center mb-4">
+              <MDBIcon fas icon="key me-3" size='lg'/>
+              <MDBInput label='CVC' id='form4' type='text' onChange={(e)=> setCVC(e.target.value)}/>
+            </div>
+            <div className="d-flex flex-row align-items-center mb-4">
+              <MDBIcon fas icon="key me-3" size='lg'/>
+              <MDBInput label='Data skadimit' id='form4' type='text' onChange={(e)=> setExpiration(e.target.value)}/>
+            </div>
+          </MDBCol>
         </MDBRow>
       </MDBCardBody>
     

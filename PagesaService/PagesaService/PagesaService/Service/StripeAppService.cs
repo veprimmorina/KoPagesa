@@ -5,7 +5,7 @@ using Token = Stripe.Token;
 
 namespace PagesaService.Service
 {
-    public class StripeAppService
+    public class StripeAppService : IStripeAppService
     {
         private readonly ChargeService _chargeService;
         private readonly CustomerService _customerService;

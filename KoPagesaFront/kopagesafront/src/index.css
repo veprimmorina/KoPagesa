@@ -150,3 +150,7 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(224,151,226,1) 35%, r
 .main{
   padding-bottom: 150px;
 }
+.fine{
+  height: 280px;
+  overflow: auto;
+}
