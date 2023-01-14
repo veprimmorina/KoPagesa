@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { MDBInput } from 'mdb-react-ui-kit';
 import React, { useEffect, useState } from 'react'
-import { Button, NavDropdown } from 'react-bootstrap'
+import { Button, Form, Modal, NavDropdown } from 'react-bootstrap'
+import { Link } from "react-router-dom";
 import Gjobat from './Gjobat'
 import GjobatEPaguara from './GjobatEPaguara';
+import ShikoPatentenModal from './ShikoPatentenModal';
 
 
 function Profili() {
@@ -11,6 +14,21 @@ function Profili() {
   const [gjobatEPaguara, setGjobatEPaguara] = useState();
   const [user,setUser]=useState()
   const [profile, setProfile] = useState(false)
+  const [showM,setShowM] = useState(false)
+  const [firstPage,setFirstPage]=useState(true)
+  const [patentShoferi, setPatentShoferi] = useState(false)
+  const [patenta, setPatenta] = useState()
+  const [patenten, setShfaqPatenten] = useState(false)
+  const [mainDiv, setMainDiv] = useState(true)
+  const [numriKarteles, setNumriKarteles] = useState()
+  const [CVC, setCVC] = useState()
+  const [expiration, setExpiration] = useState()
+  const [pagesa, setPagesa] = useState()
+  const [pershkrimi, setPershkrimi] = useState()
+  const [errorMessage, setErrorMessage] = useState()
+  const [succesMessage, setSuccessMessage] = useState()
+  const [njoftimet, setNjoftimet] = useState()
+  const [addDescription, setAddDescription] = useState()
 
   useEffect(()=>{
       let name = "cname" + "=";
@@ -31,23 +49,64 @@ function Profili() {
         
         }
       }
-      axios.get("https://localhost:7235/api/Perdoruesi/decrypt/"+cn).then(response=>{
+      axios.get("https://localhost:7235/api/Klienti/decrypt/"+cn).then(response=>{
           setUser(response.data)  
+          setNjoftimet(response.data.njoftimet)
         axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/"+response.data.numriPersonal).then(response=>{
           setGjobat(response.data)
+        })
+        axios.get("https://localhost:7235/api/Patenta/get/patenta/numri/12345678910").then(response=>{
+          setPatenta(response.data)
       })
-      })
+        })
       axios.get("https://localhost:7000/api/Gjoba/get/paid/12345678910").then(response=>{
         setGjobatEPaguara(response.data)
        
       })
+      
     
    },[])
    const logOut =()=>{
-    axios.post("https://localhost:7235/api/Perdoruesi/logout").then(response=>{
+    axios.post("https://localhost:7235/api/Klienti/logout").then(response=>{
       document.cookie = "cname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     })
     window.location.href="http://localhost:3000"
+  }
+  const shfaqPatentShoferi = () =>{
+    if(patentShoferi==false){
+      setPatentShoferi(true)
+    }else{
+      setPatentShoferi(false)
+    }
+  }
+  const paguaj = () => {
+    if(user.numriKarteles!=numriKarteles){
+      setErrorMessage("Numri i karteles eshte gabim")
+    }
+    else if(CVC!=user.cvc){
+      setErrorMessage("CVC gabim")
+    }
+    else if(user.dataSkadimit!=expiration){
+      setErrorMessage("Data e skadimit te dhene nuk pershtatet me daten e karteles tuaj")
+
+    }else{
+      var Customer = {
+        customerId: user.kartelaId,
+        receiptEmail: user.emaili,
+        description: pershkrimi+" - "+addDescription,
+        currency: "EUR",
+        amount: pagesa*100
+      }
+      axios.post("https://localhost:7208/api/Stripe/payment/add",Customer).then(response=>{
+        console.log(response.data)
+        axios.post("https://localhost:7208/api/Pagesats/konfirmo/pagesen/"+user.emri+"/"+user.mbiemri+"/"+Customer.amount+"/"+pershkrimi+"/"+user.emaili).then(response=>{
+          setErrorMessage("")
+          setSuccessMessage("Pagesa u realizua me sukses!")
+          console.log(response.data)
+        })
+        setShowM(false)
+      })
+    }
   }
   return (
     <>
@@ -62,9 +121,9 @@ function Profili() {
               <li className='breadcrumb-item'>
               <i className="bi bi-bell-fill"></i>
               <NavDropdown title="" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(true);setMainDiv(false)}}>Shiko patent shoferin</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(false);setMainDiv(true)}}>
+                Profili
               </NavDropdown.Item>
               <NavDropdown.Item onClick={()=>logOut()}>Log out</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -73,7 +132,9 @@ function Profili() {
             </ol>
 
           </nav>    
+          { mainDiv &&
           <div class="row gutters-sm">
+       <b className='text-success'>{succesMessage}</b>
             <div class="col-md-4 mb-3">
               <div class="card shadow">
                 <div class="card-body">
@@ -84,7 +145,7 @@ function Profili() {
                       <p class="text-secondary mb-1">Full Stack Developer</p>
                       <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                       <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <Link to={'/12345678910'}><button class="btn btn-outline-primary" >Patent shoferi im</button></Link>
                     </div>
                   </div>
                 </div>
@@ -164,7 +225,7 @@ function Profili() {
                  
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                      <a class="btn btn-info" onClick={()=>setShowM(true)}>Paguaj</a>
                     </div>
                   </div>
                 </div>
@@ -195,12 +256,80 @@ function Profili() {
               </div>
             </div>
           </div>
+}
         </div>
     </div>
+    {patenten && <ShikoPatentenModal perdoruesi={patenta!=undefined ? patenta : ""}/> }
      </> : <p></p>}
-   
-    
-    </>
+     
+     <Modal show={showM} onHide={()=>setShowM(false)} className='text-center mt-5'>              
+            {firstPage==true ? 
+          <><Modal.Header closeButton className='modal-payment-pay'>
+          <Modal.Title className='text-center'>Gjoba</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="modal-payment">                  
+          <Form>
+            <Form.Group>
+              <Form.Label>Pagese per:</Form.Label>
+              <select className='form-control' onChange={(e)=>setAddDescription(e.value.target)}>
+                <option></option>
+                <option value="Internet">Internet</option>
+                <option value="Uji">Uji</option>
+                <option value="Mbeturina">Mbeturina</option>
+              </select>
+              </Form.Group>
+              <Form.Label>Pagesa:</Form.Label>
+              <Form.Control type="text" onChange={(e)=>setPagesa(e.target.value)}></Form.Control>
+              <Form.Label>Ora dhe data:</Form.Label>
+              <Form.Control type="text"></Form.Control>
+              <Form.Label>Pershkrimi:</Form.Label>
+              <textarea className='form-control' onChange={(e)=>setPershkrimi(e.target.value)}></textarea>
+            </Form>
+            
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={()=>setShowM(false)}>
+                            Anulo
+            </Button>    
+            <Button variant="primary" onClick={()=>setFirstPage(false)}>
+              Paguaj
+            </Button>
+                         
+          </Modal.Footer>
+          </>
+          : 
+          <>
+          <Modal.Header className="stripe">
+            <Modal.Title className='text-center invisible'>Order Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            
+           <Form>
+           
+            
+            <MDBInput wrapperClass='mb-4' className='mr-5 mt-4' label='Numri i karteles'  id='formControlLg' type='email' size="sm" onChange={(e)=>setNumriKarteles(e.target.value)}/>
+            <div className='d-flex'>
+              <MDBInput wrapperClass='mb-4' className='mr-5' label='Expiration' placeholder='MM/YY' id='formControlLg' type='email' size="sm" onChange={(e)=>setExpiration(e.target.value)}/>
+              <MDBInput wrapperClass='mb-4' className='mr-5' label='CVC' id='formControlLg' placeholder='CVC' type='email' size="sm" onChange={(e)=>setCVC(e.target.value)}/>
+              <MDBInput wrapperClass='mb-4' className='mr-5' label='Pagesa' id='formControlLg' type='email' size="sm" value={pagesa+"€"} disabled />
+            </div>
+            <p className=" pb-lg-2 " style={{color: '#393f81'}}>Don't have an account? </p>
+           </Form>
+           <p className="text-danger">{errorMessage}</p>
+          </Modal.Body>
+          <Modal.Footer className="payment">
+            <Button variant="secondary" onClick={()=> setFirstPage(true)}>
+             Prapa
+            </Button>
+            <Button variant="primary" onClick={()=> paguaj()}>
+              Paguaj
+            </Button>
+           
+          </Modal.Footer>
+          </> 
+          }
+    </Modal>
+          </>
   )
 }
 

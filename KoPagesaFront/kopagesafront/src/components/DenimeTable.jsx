@@ -54,6 +54,7 @@ function DenimeTable() {
     setShowM(false)
     }
     const dataSearch = () =>{
+      alert(kerkoData)
         axios.get("https://localhost:7000/api/Gjoba/get/by/date/"+kerkoData).then(response=>{
           setDenimet(response.data)
         })
@@ -123,7 +124,7 @@ function DenimeTable() {
           <Form.Label>Pagesa:</Form.Label>
           <Form.Control type="text" onChange={(e)=> setPagesa(e.target.value)}></Form.Control>
           <Form.Label>Data:</Form.Label>
-          <Form.Control type="text" value={year+"-"+month+"-"+date} disabled readOnly></Form.Control>
+          <Form.Control type="text" value={year+"-"+"0"+month+"-"+date} disabled readOnly></Form.Control>
           <Form.Label>Ora:</Form.Label>
           <Form.Control type="text" value={time} disabled readOnly></Form.Control>
           <Form.Label>Adresa:</Form.Label>

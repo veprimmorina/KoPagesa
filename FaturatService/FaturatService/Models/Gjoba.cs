@@ -29,6 +29,7 @@ namespace FaturatService.Models
         public double Denimi { get; set; }
         [Column]
         public Boolean EPaguar { get; set; }
+        
 
     }
 }

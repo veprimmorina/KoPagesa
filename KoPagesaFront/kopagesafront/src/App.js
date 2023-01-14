@@ -15,6 +15,7 @@ import PolicetProfile from "./components/PolicetProfile";
 import PoliciaDashboard from "./components/PoliciaDashboard";
 import Regjistrohu from "./components/Regjistrohu";
 import Kycu from "./components/Kycu";
+import ShikoPatentenModal from "./components/ShikoPatentenModal";
 
 
 function App() {
@@ -30,6 +31,7 @@ return(
       <Route path="/dashboard/policet" element={<PoliciaDashboard />}></Route>
       <Route path="/regjistrohu" element={<Regjistrohu />}></Route>
       <Route path="/kycu" element={<Kycu />}></Route>
+      <Route path="/profili/:id" element={<ShikoPatentenModal />}></Route>
     </Routes>
   </BrowserRouter>
 )

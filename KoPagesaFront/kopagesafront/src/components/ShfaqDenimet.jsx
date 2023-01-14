@@ -2,7 +2,7 @@ import React from 'react'
 
 function ShfaqDenimet({denimi}) {
   return (
-    <tr>
+    <tr className='text-white'>
         <td>{denimi.pershkrimi}</td>
         <td>{denimi.data}</td>
         <td>{denimi.koha}</td>

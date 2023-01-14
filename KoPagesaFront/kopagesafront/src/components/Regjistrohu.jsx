@@ -51,26 +51,26 @@ function Regjistrohu() {
         setShtoKartel("")
         let kodiK=(111111+Math.random()*(999999-111111)).toFixed(0)
         setKodi(kodiK)
-        axios.get("https://localhost:7235/api/Perdoruesi/ekziston/"+numriPersonal+"/"+emailAdresa).then(response=>{
+        axios.get("https://localhost:7235/api/Klienti/ekziston/"+numriPersonal+"/"+emailAdresa).then(response=>{
            if(response.data==true){
             setErrorMessage("Ekzison nje perdorues me keto kredenciale!")
            }else{
             setFirstPage(!firstPage)
             setErrorMessage("")
-            axios.get("https://localhost:7235/api/Perdoruesi/dergo/kodin/"+emailAdresa+"/"+kodiK)
+            axios.get("https://localhost:7235/api/Klienti/dergo/kodin/"+emailAdresa+"/"+kodiK)
            } 
         })
       }
     }else{
       let kodiK=(111111+Math.random()*(999999-111111)).toFixed(0)
         setKodi(kodiK)
-        axios.get("https://localhost:7235/api/Perdoruesi/ekziston/"+numriPersonal+"/"+emailAdresa).then(response=>{
+        axios.get("https://localhost:7235/api/Klienti/ekziston/"+numriPersonal+"/"+emailAdresa).then(response=>{
            if(response.data==true){
             setErrorMessage("Ekzison nje perdorues me keto kredenciale!")
            }else{
             setFirstPage(!firstPage)
             setErrorMessage("")
-            axios.get("https://localhost:7235/api/Perdoruesi/dergo/kodin/"+emailAdresa+"/"+kodiK)
+            axios.get("https://localhost:7235/api/Klienti/dergo/kodin/"+emailAdresa+"/"+kodiK)
            } 
         })
     }
@@ -103,7 +103,7 @@ function Regjistrohu() {
             mbajtesiKarteles: cardHolderName,
             kartelaId: res.data.customerId
         }
-        axios.post("https://localhost:7235/api/Perdoruesi",Perdoruesi).then(response=>{
+        axios.post("https://localhost:7235/api/Klienti",Perdoruesi).then(response=>{
           console.log(response.data)
           setErrorMessage("")
       })

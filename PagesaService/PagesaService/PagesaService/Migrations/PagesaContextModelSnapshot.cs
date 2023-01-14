@@ -21,7 +21,7 @@ namespace PagesaService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PagesaService.Pagesat", b =>
+            modelBuilder.Entity("PagesaService.Models.Pagesat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace PagesaService.Migrations
 
                     b.Property<string>("LlojiPageses")
                         .IsRequired()
-                        .HasColumnType("nvarchar (25)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Mbiemri")
                         .IsRequired()
@@ -44,6 +44,9 @@ namespace PagesaService.Migrations
                     b.Property<string>("NrPersonal")
                         .IsRequired()
                         .HasColumnType("nvarchar (20)");
+
+                    b.Property<int>("PagesaPer")
+                        .HasColumnType("int");
 
                     b.Property<double>("Shuma")
                         .HasColumnType("float");

@@ -16,7 +16,10 @@ namespace PagesaService.Models
         public string Emri { get; set; }
         [Column(TypeName = "nvarchar (25)")]
         public string Mbiemri { get; set; }
-        [Column(TypeName = "nvarchar (25)")]
+        [Column (TypeName =("nvarchar(30)"))]
         public string LlojiPageses { get; set; }
+        [Column]
+        public int PagesaPer { get; set; }
+
     }
 }

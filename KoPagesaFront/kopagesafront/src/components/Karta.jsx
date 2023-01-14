@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap'
 
 function Karta({title,value}) {
   return (
-    <Card className={'shadow '+title=="Numri i gjobave" ? " bg-danger " : title=="Gjoba pa paguar" ? "bg-warning" : title=="Gjoba te paguara" ? "bg-success" : title=="Gjoba sot" ? "bg-light" : ""}>
+    <Card className={'shadow '+title=="Numri i gjobave" ? " bg-danger " : title=="Gjoba pa paguar" ? "bg-warning" : title=="Gjoba te paguara" ? "bg-success" : title=="Gjoba sot" ? "bg-light" : title=="Patent shofer" ? "bg-success" : title=="Te deaktivizuar" ? "bg-danger" : title=="Aktive" ? "bg-primary" : "bg-danger"}>
     <Card.Body className='text-center'>
     <h1><i class="bi bi-person-video2"></i></h1>
     <h5 className='card-title'>{title}</h5>

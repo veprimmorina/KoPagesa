@@ -154,3 +154,6 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(224,151,226,1) 35%, r
   height: 280px;
   overflow: auto;
 }
+.modal-payment-pay{
+  background-image: url('https://upgradedpoints.com/wp-content/uploads/2022/01/Most_Popular_Payment_Methods_featured_image.png');
+}

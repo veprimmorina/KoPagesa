@@ -8,12 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using FaturatService;
 using FaturatService.Models;
 using System.Collections;
+using FaturatService.Services;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Drawing;
+using System.IO;
 
 namespace FaturatService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GjobaController : ControllerBase
+    public class GjobaController : ControllerBase,IGjoba
     {
         private readonly FaturaContext _context;
 
@@ -153,8 +158,8 @@ namespace FaturatService.Controllers
         {
             return await _context.gjoba.Where(x => x.Data.Equals(date)).ToListAsync();
         }
-        [HttpGet("get/stats")]
 
+        [HttpGet("get/stats")]
         public async Task<string> GetStats()
         {
             DateTime now = DateTime.Now;

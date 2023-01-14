@@ -45,7 +45,7 @@ function PatentetTabela({patenti}) {
         ePaguar: false
     }
     axios.post("https://localhost:7000/api/Gjoba",Fatura).then(response=>{
-        axios.get("https://localhost:7235/api/Perdoruesi/confirm/"+Fatura.nrPersonal+"/"+Fatura.denimi+"/"+Fatura.pershkrimi).then(response=>{
+        axios.get("https://localhost:7235/api/Klienti/confirm/"+Fatura.nrPersonal+"/"+Fatura.denimi+"/"+Fatura.pershkrimi).then(response=>{
           console.log(response.data)
         })
     })
@@ -120,7 +120,7 @@ function PatentetTabela({patenti}) {
           <Form.Label>Pagesa:</Form.Label>
           <Form.Control type="text" onChange={(e)=> setPagesa(e.target.value)}></Form.Control>
           <Form.Label>Data:</Form.Label>
-          <Form.Control type="text" value={year+"/"+month+"/"+date} disabled readOnly></Form.Control>
+          <Form.Control type="text" value={year+"-"+"0"+month+"-"+date} disabled readOnly></Form.Control>
           <Form.Label>Ora:</Form.Label>
           <Form.Control type="text" value={time} disabled readOnly></Form.Control>
           <Form.Label>Adresa:</Form.Label>
