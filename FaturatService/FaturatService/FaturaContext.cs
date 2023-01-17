@@ -14,5 +14,7 @@ namespace FaturatService
         }
 
         public DbSet<Gjoba> gjoba { get; set; }
+
+        public DbSet<FaturatService.Models.Fatura> Fatura { get; set; }
     }
 }

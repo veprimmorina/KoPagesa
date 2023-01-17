@@ -3,33 +3,30 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FaturatService.Models
 {
-    public class Gjoba
+    public class Gjoba: Fatura
     {
+        public Gjoba(int id, string tipi, int lloji, string pershkrimi, string nrPersonal, string data, string koha, string adresa, double denimi, bool ePaguar) : base(id, tipi, lloji, pershkrimi, nrPersonal, data, koha, adresa, denimi, ePaguar)
+        {
+        }
 
-        [Key]
-        public int Id { get; set; }
+        public void setTipi(string tipi) 
+        {
+             
+        }
 
-        [Column]
-        public string Pershkrimi { get; set; }
 
-        [Column]
-        public string NrPersonal { get; set; }
-
-        [Column(TypeName = "nvarchar (25)")]
-        public string Data { get; set; }
-
-        [Column(TypeName = "nvarchar (15)")]
-
-        public string Koha { get; set; }
-
-        [Column(TypeName = "nvarchar (60)")]
-        public string Adresa { get; set; }
-
-        [Column]
-        public double Denimi { get; set; }
-        [Column]
-        public Boolean EPaguar { get; set; }
-        
+        /*
+        public Gjoba(string pershkrimi, string numriPersonal, string data, string koha, string adresa, double denimi)
+        {
+            Pershkrimi = pershkrimi;
+            NrPersonal = numriPersonal;
+            Data = data;
+            Koha = koha;
+            Adresa = adresa;
+            Denimi = denimi;
+            EPaguar = false;
+        }
+        */
 
     }
 }
