@@ -1,5 +1,6 @@
 import React from 'react'
 import Banerat from './Banerat'
+import Footer from './Footer'
 import NavBar from './NavBar'
 import Partneret from './Partneret'
 import Permbajtja from './Permbajtja'
@@ -11,6 +12,7 @@ function FaqjaKryesore() {
     <Banerat />
     <Partneret />
     <Permbajtja />
+    <Footer />
     </>
   )
 }

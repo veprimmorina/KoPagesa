@@ -16,6 +16,8 @@ import PoliciaDashboard from "./components/PoliciaDashboard";
 import Regjistrohu from "./components/Regjistrohu";
 import Kycu from "./components/Kycu";
 import ShikoPatentenModal from "./components/ShikoPatentenModal";
+import Denimi from "./components/Denimi";
+import GjobatId from "./components/GjobatId";
 
 
 function App() {
@@ -32,6 +34,8 @@ return(
       <Route path="/regjistrohu" element={<Regjistrohu />}></Route>
       <Route path="/kycu" element={<Kycu />}></Route>
       <Route path="/profili/:id" element={<ShikoPatentenModal />}></Route>
+      <Route path="/denimi" element={<Denimi />}></Route>
+      <Route path="/gjoba/:id" element={<Denimi />}></Route>
     </Routes>
   </BrowserRouter>
 )

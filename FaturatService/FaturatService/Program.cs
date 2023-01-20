@@ -1,4 +1,5 @@
 using FaturatService;
+using FaturatService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FaturaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+builder.Services.AddSingleton<FaturaContextStrategy>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "MyAllowedOrigins",
