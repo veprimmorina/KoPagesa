@@ -12,6 +12,8 @@ namespace KoPagesa
         }
 
         public DbSet <Perdoruesi> perdoruesi { get; set; }
+        public DbSet<Klienti> klienti { get; set; }
+        public DbSet<Sherbyesi> sherbyesi { get; set; }
         public DbSet <Patenta> patenta { get; set;}
 
 

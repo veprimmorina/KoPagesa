@@ -7,69 +7,57 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KoPagesa;
 using KoPagesa.Models;
-using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Text;
-using System.Reflection.PortableExecutable;
-using Newtonsoft.Json.Linq;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Reflection.Metadata;
-using KoPagesa.Pattern;
-using KoPagesa.Exception;
-using KoPagesa.Services;
 
 namespace KoPagesa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PerdoruesiController : ControllerBase,IPerdoruesi
+    public class KlientiController : ControllerBase
     {
         private readonly PerdoruesitContext _context;
-        private PerdoruesiFactory _perdoruesiFactory;
 
-        public PerdoruesiController(PerdoruesitContext context, PerdoruesiFactory perdoruesiFactory)
+        public KlientiController(PerdoruesitContext context)
         {
             _context = context;
-            _perdoruesiFactory = perdoruesiFactory;
         }
 
-        // GET: api/Perdoruesi
+        // GET: api/Klienti
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Perdoruesi>>> Getperdoruesi()
+        public async Task<ActionResult<IEnumerable<Klienti>>> Getklienti()
         {
-            
-            return await _context.perdoruesi.ToListAsync();
+            return await _context.klienti.ToListAsync();
         }
 
-        // GET: api/Perdoruesi/5
+        // GET: api/Klienti/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Perdoruesi>> GetPerdoruesi(int id)
+        public async Task<ActionResult<Klienti>> GetKlienti(int id)
         {
-            var perdoruesi = await _context.perdoruesi.FindAsync(id);
+            var klienti = await _context.klienti.FindAsync(id);
 
-            if (perdoruesi == null)
+            if (klienti == null)
             {
                 return NotFound();
             }
 
-            return perdoruesi;
+            return klienti;
         }
 
-        // PUT: api/Perdoruesi/5
+        // PUT: api/Klienti/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerdoruesi(int id, Perdoruesi perdoruesi)
+        public async Task<IActionResult> PutKlienti(int id, Klienti klienti)
         {
-            if (id != perdoruesi.PerdoruesiId)
+            if (id != klienti.PerdoruesiId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(perdoruesi).State = EntityState.Modified;
+            _context.Entry(klienti).State = EntityState.Modified;
 
             try
             {
@@ -77,7 +65,7 @@ namespace KoPagesa.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PerdoruesiExists(id))
+                if (!KlientiExists(id))
                 {
                     return NotFound();
                 }
@@ -90,72 +78,61 @@ namespace KoPagesa.Controllers
             return NoContent();
         }
 
-        // POST: api/Perdoruesi
+        // POST: api/Klienti
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Perdoruesi>> PostPerdoruesi(Perdoruesi perdoruesi)
+        public async Task<ActionResult<Klienti>> PostKlienti(Klienti klienti)
         {
-            
-            var p=await _perdoruesiFactory.createPerdorues(perdoruesi,perdoruesi.Roli);
-            _context.perdoruesi.Add(p);
+            klienti.Roli = 1;
+            _context.klienti.Add(klienti);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPerdoruesi", new { id = perdoruesi.PerdoruesiId }, perdoruesi);
+            return CreatedAtAction("GetKlienti", new { id = klienti.PerdoruesiId }, klienti);
         }
 
-        // DELETE: api/Perdoruesi/5
+        // DELETE: api/Klienti/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerdoruesi(int id)
+        public async Task<IActionResult> DeleteKlienti(int id)
         {
-            var perdoruesi = await _context.perdoruesi.FindAsync(id);
-            if (perdoruesi == null)
+            var klienti = await _context.klienti.FindAsync(id);
+            if (klienti == null)
             {
                 return NotFound();
             }
 
-            _context.perdoruesi.Remove(perdoruesi);
+            _context.klienti.Remove(klienti);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        [HttpGet("polici/{email}")]
-        public async Task<ActionResult<Perdoruesi>> GjejPolicin(string email)
+        private bool KlientiExists(int id)
         {
-            return await _context.perdoruesi.Where(x=>x.Emaili.Equals(email)).FirstOrDefaultAsync();
+            return _context.klienti.Any(e => e.PerdoruesiId == id);
         }
         [HttpGet("confirm/{numripersonal}/{shuma}/{pershkrimi}")]
         public async Task<IActionResult> SendEmail(string numripersonal, int shuma, string pershkrimi)
         {
-                            
             var perdoruesi = await _context.perdoruesi.Where(x => x.NumriPersonal.Equals(numripersonal)).FirstOrDefaultAsync();
-            if (perdoruesi == null)
-            {
-                throw new KoPagesaException("Nuk u gjet asnje perdorues me numrin personal " + numripersonal);
-            }
-            else
-            {
-                perdoruesi.Njoftime += 1;
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("veprimm1@gmail.com");
-                mailMessage.To.Add(perdoruesi.Emaili);
-                mailMessage.Subject = "Njoftim i ri";
-                mailMessage.Body = "I nderuar <b>" + perdoruesi.Emri + " " + perdoruesi.Mbiemri + "</b>.<br><br>" +
-                    " Keni pranuar një gjobë të re për shumën " + shuma + "€ me pershkrimin <b>" + pershkrimi + "</b>.<br> Paguani menjëherë përmes aplikacionit" +
-                    " KOPagesa.<br><br><br>*Kujdes: Vini rripin e sigurisë! Respekto shpejtësinë maksimale! Shpëto jetë! ";
-                mailMessage.IsBodyHtml = true;
+            perdoruesi.Njoftime += 1;
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("kopagesa@gmail.com");
+            mailMessage.To.Add(perdoruesi.Emaili);
+            mailMessage.Subject = "Njoftim i ri";
+            mailMessage.Body = "I nderuar <b>" + perdoruesi.Emri + " " + perdoruesi.Mbiemri + "</b>.<br><br>" +
+                " Keni pranuar një gjobë të re për shumën " + shuma + "€ me pershkrimin <b>" + pershkrimi + "</b>.<br> Paguani menjëherë përmes aplikacionit" +
+                " KOPagesa.<br><br><br>*Kujdes: Vini rripin e sigurisë! Respekto shpejtësinë maksimale! Shpëto jetë! ";
+            mailMessage.IsBodyHtml = true;
 
-                var smtpClient = new SmtpClient("smtp.gmail.com")
-                {
-                    Port = 587,
-                    Credentials = new NetworkCredential("veprimm1@gmail.com", "wppdhyddblkwswte"),
-                    EnableSsl = true,
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("kopagesa@gmail.com", "tzmuegmvzjksrjnt"),
+                EnableSsl = true,
 
-                };
-                smtpClient.Send(mailMessage);
-                return Ok();
-            }
-            
+            };
+            smtpClient.Send(mailMessage);
+            return Ok();
         }
         [HttpGet("ekziston/{numripersonal}/{email}")]
         public async Task<Boolean> Ekziston(string numripersonal, string email)
@@ -175,7 +152,7 @@ namespace KoPagesa.Controllers
         public async Task<IActionResult> DergoKodin(string email, string kodi)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("veprimm1@gmail.com");
+            mailMessage.From = new MailAddress("kopagesa@gmail.com");
             mailMessage.To.Add(email);
             mailMessage.Subject = "Njoftim i ri";
             mailMessage.Body = "Kodi juaj konfirmues për pergjistrim në platformën KOPagesa: <b>" + kodi + "</b>";
@@ -184,7 +161,7 @@ namespace KoPagesa.Controllers
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("veprimm1@gmail.com", "wppdhyddblkwswte"),
+                Credentials = new NetworkCredential("kopagesa@gmail.com", "tzmuegmvzjksrjnt"),
                 EnableSsl = true,
 
             };
@@ -196,20 +173,20 @@ namespace KoPagesa.Controllers
         {
 
             var perdoruesit = await _context.perdoruesi.Where(x => x.Emaili.Equals(username) && x.Fjalkalimi.Equals(password)).FirstOrDefaultAsync();
-            
-            if(perdoruesit!=null)
+
+            if (perdoruesit != null)
             {
                 var claim = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, username),
                 };
-                var identity = new ClaimsIdentity(claim,CookieAuthenticationDefaults.AuthenticationScheme);
+                var identity = new ClaimsIdentity(claim, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
                 var props = new AuthenticationProperties();
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
                 byte[] b = System.Text.ASCIIEncoding.ASCII.GetBytes(username);
                 string encrypted = Convert.ToBase64String(b);
-                
+
                 return encrypted;
 
             }
@@ -226,16 +203,12 @@ namespace KoPagesa.Controllers
             string decrypted = System.Text.ASCIIEncoding.ASCII.GetString(b);
             return await _context.perdoruesi.Where(x => x.Emaili.Equals(decrypted)).FirstOrDefaultAsync();
         }
-       
+
         [HttpPost("logout")]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync();
             return Ok();
-        }
-        private bool PerdoruesiExists(int id)
-        {
-            return _context.perdoruesi.Any(e => e.PerdoruesiId == id);
         }
     }
 }

@@ -1,5 +1,12 @@
 using KoPagesa;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using KoPagesa.Pattern;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +28,13 @@ builder.Services.AddCors(options =>
                           // add the allowed origins
                       });
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/Home/Login";
+    options.Cookie.Name = "AshProgHelpCookie";
+});
+
+builder.Services.AddSingleton<PerdoruesiFactory>();
 
 var app = builder.Build();
 
@@ -35,8 +49,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("MyAllowedOrigins");
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCookiePolicy();
 app.MapControllers();
 
 
