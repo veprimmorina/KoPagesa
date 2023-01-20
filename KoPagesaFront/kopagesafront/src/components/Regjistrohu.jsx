@@ -175,7 +175,7 @@ function Regjistrohu() {
             </>}   
           </MDBCol>
           <MDBCol md='10' lg='6' className={shtoKartel+' order-1 order-lg-2 d-flex align-items-center'}>
-            <MDBCardImage src='https://static.vecteezy.com/system/resources/previews/004/999/815/original/digital-wallet-logo-design-template-with-pixel-effect-logo-concept-of-credit-card-crypto-wallet-fast-online-payment-free-vector.jpg' fluid/>
+            <MDBCardImage src='https://www.flytap.com/-/media/Flytap/illustration/check-in/big/automatic-check-in-big.svg' fluid/>
           </MDBCol>
           <MDBCol md='10' lg='6' className={teDhenat}>
           <div className="d-flex flex-row align-items-center mb-4">

@@ -18,6 +18,7 @@ import Kycu from "./components/Kycu";
 import ShikoPatentenModal from "./components/ShikoPatentenModal";
 import Denimi from "./components/Denimi";
 import GjobatId from "./components/GjobatId";
+import Fatura from "./components/Fatura";
 
 
 function App() {
@@ -36,6 +37,7 @@ return(
       <Route path="/profili/:id" element={<ShikoPatentenModal />}></Route>
       <Route path="/denimi" element={<Denimi />}></Route>
       <Route path="/gjoba/:id" element={<Denimi />}></Route>
+      <Route path="profili/fatura/:id" element={<Fatura />}></Route>
     </Routes>
   </BrowserRouter>
 )

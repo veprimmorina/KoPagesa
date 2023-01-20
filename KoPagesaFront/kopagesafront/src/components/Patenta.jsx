@@ -42,7 +42,9 @@ function Patenta() {
     <>
     {nrGjobave==1 ? <><b className='text-danger'>1 Gjobë pa paguar</b><Button variant='dark'onClick={()=>shfaqDenimet(perdoruesi.numriPersonal)} >Shfaq</Button></> : nrGjobave==0 ? "" : <><b className='text-center text-danger'>{nrGjobave+" gjoba pa paguar"}</b><Button variant='danger' className={buton+' ml-5'} onClick={()=> shfaqDenimet(perdoruesi.numriPersonal)}>Shfaq</Button></>}
     <div className='main row'>
+    <div className='kosovo'></div>
   <div className='col-md '>
+  <div className='kosovo'></div>
   <Card className={perdoruesi.eAktivizuar==false ?' license shadow ' : "license shadow "}>
   {perdoruesi.eAktivizuar==true ? <p></p> : 
           <div className='deactivated rounded bg-danger text-white text-center'>
@@ -62,10 +64,11 @@ function Patenta() {
         </Card.Header>
         <Card.Body>
         <div className='d-flex'>
+        <div className='kosovo'></div>
           {perdoruesi!=undefined ? 
           <>
           <div>
-    
+            
         <img src={perdoruesi.fotografia} width="300px" className='mt-5 '/>
         </div>
         <div className='mt-5'>

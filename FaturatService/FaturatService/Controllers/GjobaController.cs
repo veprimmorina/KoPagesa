@@ -118,7 +118,7 @@ namespace FaturatService.Controllers
         }
 
         [HttpGet("paguaj/faturen/{numripersonal}/{id}")]
-        public async Task<IActionResult> PaguajFaturen(int numripersonal, int id)
+        public async Task<IActionResult> PaguajFaturen(string numripersonal, int id)
         {
             var gjoba = await _context.gjoba.FindAsync(id);
 

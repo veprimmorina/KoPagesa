@@ -14,6 +14,7 @@ return (
   <>
  <div className='main row'>
   <div className='col-md '>
+    
   <Card className={perdoruesi.eAktivizuar==false ?' license shadow ' : "license shadow "}>
   {perdoruesi.eAktivizuar==true ? <p></p> : 
           <div className='deactivated rounded bg-danger text-white text-center'>
@@ -32,7 +33,10 @@ return (
       </div>
         </Card.Header>
         <Card.Body>
+          
         <div className='d-flex'>
+        <div className='kosovo'></div>
+
           {perdoruesi!=undefined ? 
           <>
           <div>

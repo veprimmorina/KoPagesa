@@ -20,6 +20,9 @@ namespace PagesaService.Models
         public string LlojiPageses { get; set; }
         [Column]
         public int PagesaPer { get; set; }
+        [Column]
+        public string Pershkrimi { get; set; }
+
 
     }
 }
