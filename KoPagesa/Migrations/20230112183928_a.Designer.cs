@@ -3,6 +3,7 @@ using KoPagesa;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoPagesa.Migrations
 {
     [DbContext(typeof(PerdoruesitContext))]
-    partial class PerdoruesitContextModelSnapshot : ModelSnapshot
+    [Migration("20230112183928_a")]
+    partial class a
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,26 +86,26 @@ namespace KoPagesa.Migrations
 
                     b.Property<string>("Emaili")
                         .IsRequired()
-                        .HasColumnType("nvarchar(55)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Emri")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fjalkalimi")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mbiemri")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Njoftime")
                         .HasColumnType("int");
 
                     b.Property<string>("NumriPersonal")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Roli")
                         .HasColumnType("int");
@@ -140,17 +143,6 @@ namespace KoPagesa.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasDiscriminator().HasValue("Klienti");
-                });
-
-            modelBuilder.Entity("KoPagesa.Models.Sherbyesi", b =>
-                {
-                    b.HasBaseType("KoPagesa.Models.Perdoruesi");
-
-                    b.Property<string>("NumriFiskal")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasDiscriminator().HasValue("Sherbyesi");
                 });
 #pragma warning restore 612, 618
         }

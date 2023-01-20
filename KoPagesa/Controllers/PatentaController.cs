@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KoPagesa;
 using KoPagesa.Models;
+using KoPagesa.Services;
 
 namespace KoPagesa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatentaController : ControllerBase
+    public class PatentaController : ControllerBase,IPatenta
     {
         private readonly PerdoruesitContext _context;
 
@@ -123,6 +124,35 @@ namespace KoPagesa.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpGet("get/stats")]
+
+        public async Task<string> GetStats()
+        {
+            DateTime now = DateTime.Now;
+            now.ToString("yyyy-mm-dd");
+            var patentat = await _context.patenta.CountAsync();
+            var deaktive = await _context.patenta.Where(x => x.EAktivizuar.Equals(false)).CountAsync();
+            var sot = await _context.patenta.Where(x => x.DataLeshimit.Equals(now)).CountAsync();
+            string total = patentat + ";" + deaktive+";" + sot ;
+
+            return total;
+        }
+        [HttpGet("get/patenta/numri/{numripersonal}")]
+        public async Task<ActionResult<Patenta>> GetPatentaByNumber(string numripersonal)
+        {
+            return await _context.patenta.Where(x => x.NumriPersonal.Equals(numripersonal)).FirstOrDefaultAsync();
+        }
+        [HttpGet("get/total")]
+        public async Task<string> GetTotal()
+        {
+            var total = await _context.patenta.CountAsync();
+            var deactivated= await _context.patenta.Where(x => x.EAktivizuar.Equals(false)).CountAsync();
+            var activated = await _context.patenta.Where(x => x.EAktivizuar.Equals(true)).CountAsync();
+
+            return total + ";" + deactivated + ";" + activated;
+        }
+       
         private bool PatentaExists(int id)
         {
             return _context.patenta.Any(e => e.Id == id);
