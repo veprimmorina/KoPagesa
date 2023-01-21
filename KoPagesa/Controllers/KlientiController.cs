@@ -32,6 +32,7 @@ namespace KoPagesa.Controllers
         {
             return await _context.klienti.ToListAsync();
         }
+        
 
         // GET: api/Klienti/5
         [HttpGet("{id}")]
