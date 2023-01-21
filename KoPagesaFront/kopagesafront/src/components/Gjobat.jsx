@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import GjobatId from './GjobatId'
 
-function Gjobat() {
+function Gjobat({gjobaP,gjobaKI,gjobaE, gjobaEm, gjobaMb}) {
   
   const [showM,setShowM] = useState(false)
   const [firstPage, setFirstPage] = useState(true)
@@ -12,7 +12,7 @@ function Gjobat() {
   const [gjoba,setGjoba]=useState()
 
   useEffect(()=>{
-    axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/12345678910").then(response=>{
+    axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/"+gjobaP).then(response=>{
       setGjobat(response.data)
       console.log(response.data)
     })
@@ -44,7 +44,7 @@ function Gjobat() {
     <div className='fine'>
     <div className='bg-danger text-center text-white mt-3 rounded'>
       { 
-      gjobat.map(gjoba=>(<GjobatId key={gjoba+gjoba.id} gjoba={gjoba} />))
+      gjobat.map(gjoba=>(<GjobatId key={gjoba+gjoba.id} gjoba={gjoba} gjobaE={gjobaE} gjobaEm={gjobaEm} gjobaKI={gjobaKI} gjobaMb={gjobaMb}/>))
     }
     </div>
     {gjoba!=undefined ? 
@@ -61,6 +61,7 @@ function Gjobat() {
               </Form.Group>
               <Form.Label>Pagesa:</Form.Label>
               <Form.Control type="text" value={gjoba.denimi+" €"} readOnly disabled></Form.Control>
+              
               <Form.Label>Ora dhe data:</Form.Label>
               <Form.Control type="text" value={gjoba.data+" - "+gjoba.koha} disabled readOnly ></Form.Control>
               <Form.Label>Adresa:</Form.Label>
@@ -110,7 +111,6 @@ function Gjobat() {
            
           </Modal.Footer>
           </>
-
           }
         </Modal>
  : <p></p>}

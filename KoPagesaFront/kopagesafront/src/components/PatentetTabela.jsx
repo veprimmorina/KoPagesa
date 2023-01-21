@@ -35,17 +35,20 @@ function PatentetTabela({patenti}) {
       setShowM(true)
     }
     const shtoDenimin = () => {
-      var Fatura = {
+      var Gjoba = {
+        tipi: "gjobe",
+        lloji: 0,
         pershkrimi: pershkrimi,
         nrPersonal: numriPersonal,
-        data: date+"/"+month+"/"+year,
+        data: year+"-0"+month+"-"+date,
         koha: time,
         adresa: adresa,
         denimi: pagesa,
         ePaguar: false
     }
-    axios.post("https://localhost:7000/api/Gjoba",Fatura).then(response=>{
-        axios.get("https://localhost:7235/api/Klienti/confirm/"+Fatura.nrPersonal+"/"+Fatura.denimi+"/"+Fatura.pershkrimi).then(response=>{
+    alert(Gjoba.denimi)
+    axios.post("https://localhost:7000/api/Gjoba",Gjoba).then(response=>{
+        axios.get("https://localhost:7235/api/Klienti/confirm/"+Gjoba.nrPersonal+"/"+Gjoba.denimi+"/"+Gjoba.pershkrimi).then(response=>{
           console.log(response.data)
         })
     })

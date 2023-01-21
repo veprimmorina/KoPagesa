@@ -77,15 +77,15 @@ namespace PagesaService.Controllers
 
         // POST: api/Pagesats
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Pagesat>> PostPagesat(Pagesat pagesat)
+        [HttpPost("{lloji}")]
+        public async Task<ActionResult<Pagesat>> PostPagesat(Pagesat pagesat, string lloji)
         {
 
-            if (pagesat.LlojiPageses.Equals("gjoba"))
+            if (lloji.Equals("gjoba"))
             {
                 pagesat.PagesaPer = (int)FaturaEnum.gjoba;
             }
-            else if (pagesat.LlojiPageses.Equals("internet"))
+            else if (lloji.Equals("internet"))
             {
                 pagesat.PagesaPer = (int)FaturaEnum.interneti;
             }
@@ -135,6 +135,16 @@ namespace PagesaService.Controllers
             };
             smtpClient.Send(mailMessage);
             return Ok();
+        }
+        [HttpGet("personal/payment/{numripersonal}")]
+        public async Task<ActionResult<IEnumerable<Pagesat>>> GetByPersonalNumber(string numripersonal)
+        {
+            return await _context.pagesa.Where(x => x.NrPersonal.Equals(numripersonal)).ToListAsync();
+        }
+        [HttpGet("categorized/{category}")]
+        public async Task<ActionResult<IEnumerable<Pagesat>>> GetPagesatByCategory(int category)
+        {
+            return await _context.pagesa.Where(x => x.PagesaPer.Equals(category)).ToListAsync();
         }
         private bool PagesatExists(int id)
         {

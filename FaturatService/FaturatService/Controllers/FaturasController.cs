@@ -13,7 +13,7 @@ namespace FaturatService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FaturasController : ControllerBase
+    public class FaturasController : ControllerBase, IFatura
     {
         private readonly FaturaContext _context;
         private FaturaContextStrategy _faturaContext;
