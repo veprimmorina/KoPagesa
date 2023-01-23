@@ -60,34 +60,31 @@ function Kycu() {
     {profile==false ? <>
       <MDBContainer fluid>
 
-      <MDBCard className='text-black m-5' style={{borderRadius: '25px'}}>
+      <MDBCard className='text-black m-5 pt-3 shadow' style={{borderRadius: '25px'}}>
         <MDBCardBody>
           <MDBRow>
-            <MDBCol md='10' lg='6' className='order-2 order-lg-1 d-flex flex-column align-items-center'>
+            <MDBCol md='10' lg='6' className='order-2 order-lg-1 d-flex flex-column align-items-center pb-5'>
 
-              <p classNAme="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+              <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Kycu</p>
 
              
 
               <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="envelope me-3" size='lg'/>
-                <MDBInput label='Your Email' id='form2' type='email' onChange={(e)=> setEmail(e.target.value)}/>
+                <MDBInput label='Email adresa' id='form2' type='email' onChange={(e)=> setEmail(e.target.value)}/>
               </div>
 
               <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="lock me-3" size='lg'/>
-                <MDBInput label='Password' id='form3' type='password' onChange={(e)=> setPass(e.target.value)}/>
+                <MDBInput label='Fjalkalimi' id='form3' type='password' onChange={(e)=> setPass(e.target.value)}/>
               </div>
 
               
 
-              <div className='mb-4'>
-                <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
-              </div>
+              
 
               <MDBBtn className='mb-4' size='lg' onClick={()=> logIn()}>Kycu</MDBBtn>
-                <Button onClick={()=> decrypt()}>Get encrpt</Button>
-                <Button onClick={()=> logOut()}>Log out</Button>
+                
             </MDBCol>
 
             <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>

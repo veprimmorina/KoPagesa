@@ -48,7 +48,7 @@ namespace FaturatService.Models
             EPaguar = ePaguar;
         }
 
-        public void setTipi(Fatura fatura,string tipi)
+        public virtual void setTipi(Fatura fatura,string tipi)
         {
             fatura.Tipi = tipi;
         }

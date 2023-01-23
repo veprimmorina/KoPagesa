@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import DenimetPaguar from './DenimetPaguar'
+import * as Icon from 'react-bootstrap-icons'
 
 function DenimePaguar() {
     const [denimet, setDenimet]=useState([])
@@ -21,7 +22,7 @@ function DenimePaguar() {
   return (
     <>
     <input type="search" onChange={(e)=>setSearch(e.target.value)}/>
-    <button className='btn btn-success' onClick={searchDenimet}><i className='bi bi-search'></i></button>
+    <button className='btn btn-success' onClick={searchDenimet}><Icon.Search color='white' /></button>
       <Table striped border hover variant='dark'>
         <thead>
           <tr>

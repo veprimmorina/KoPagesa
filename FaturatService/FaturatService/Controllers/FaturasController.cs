@@ -82,25 +82,10 @@ namespace FaturatService.Controllers
         [HttpPost]
         public async Task<ActionResult<Fatura>> PostFatura(Fatura fatura)
         {
-
-            var faturaRe = fatura;
-            
-            if (fatura.Lloji == 0)
-            {
-                faturaRe = new Gjoba(fatura.Id, fatura.Tipi, fatura.Lloji, fatura.Pershkrimi, fatura.NrPersonal, fatura.Data, fatura.Koha, fatura.Adresa, fatura.Denimi, fatura.EPaguar);
-                faturaRe.setTipi(faturaRe, "Gjobe");
+                var faturaRe = await _faturaContext.setTipi(fatura);
                 _context.Fatura.Add(faturaRe);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetFatura", new { id = fatura.Id }, fatura);
-            }
-            else
-            {
-                faturaRe = new Deshmia(fatura.Id, fatura.Tipi, fatura.Lloji, fatura.Pershkrimi, fatura.NrPersonal, fatura.Data, fatura.Koha, fatura.Adresa, fatura.Denimi, fatura.EPaguar);
-                faturaRe.setTipi(faturaRe,"Deshmi pagese");
-                _context.Fatura.Add(faturaRe);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction("GetFatura", new { id = fatura.Id }, fatura);
-            }
         }
 
         // DELETE: api/Faturas/5

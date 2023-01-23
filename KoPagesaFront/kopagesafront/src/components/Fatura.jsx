@@ -6,34 +6,37 @@ import { useParams } from 'react-router-dom';
 function Fatura() {
     const {id} = useParams();
     const [data, setData] = useState()
+    const [url,setUrl] = useState()
     useEffect(()=>{
         axios.get("https://localhost:7208/api/Pagesats/"+id).then(response=>{
             setData(response.data)
         })
-    })
+        axios.get("https://localhost:7235/api/Klienti/iron/download/"+id).then(response=>{
+            setUrl("https://localhost:7235/api/Klienti/iron/download/"+id)
+            console.log('ok')
+        })
+    },[])
+    
   return (
    <>
     { 
         data!=undefined ?
-    <div className={" page-content container "+data.pagesaPer==2 ? "bg-warning" : data.pagesaPer==1 ? "bg-success" :  "bg-primary"}>
-    <div class="page-header text-blue-d2">
-        <h1 class="page-title text-secondary-d1">
+    <div className={" page-content container pb-5 "+data.pagesaPer==2 ? "bg-warning" : data.pagesaPer==1 ? "bg-success" :  "bg-primary"}>
+    <div class="page-header text-blue-d2 pb-5">
+        <h1 class="page-title text-secondary-d1 pb-5">
             Gjoba 
             <small class="page-info">
-                <i class="fa fa-angle-double-right text-80"></i>
+                <i class="fa fa-angle-double-right text-80 pb-5"></i>
                 Numri identifikues: {data.id}
             </small>
         </h1>
 
-        <div class="page-tools">
-            <div class="action-buttons">
-                <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
-                    <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
-                    Print
-                </a>
-                <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
-                    <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
-                    Export
+        <div class="page-tools pb-5">
+            <div class="action-buttons pb-5">
+               
+                <a class="btn bg-white btn-light mx-1px text-95" target="_blank" href={url} data-title="PDF">
+                    
+                    Shkarko
                 </a>
             </div>
         </div>

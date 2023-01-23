@@ -8,13 +8,10 @@ namespace FaturatService.Services
     {
         private Fatura faturaRe;
 
-       
-        
-        public async Task<ActionResult<Fatura>> setTipi(Fatura fatura) 
+        public async Task<Fatura> setTipi(Fatura fatura) 
         {
             if (fatura.Lloji == 0)
             {
-
                 faturaRe = new Gjoba(fatura.Id, fatura.Tipi, fatura.Lloji, fatura.Pershkrimi, fatura.NrPersonal, fatura.Data, fatura.Koha, fatura.Adresa, fatura.Denimi, fatura.EPaguar);
                 faturaRe.setTipi(faturaRe, "Gjobe");
                 return faturaRe;

@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import * as Icon from 'react-bootstrap-icons';
 import {
     MDBNavbar,
     MDBNavbarNav,
@@ -55,7 +56,7 @@ function NavBar() {
       <header>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">KoPagesa</Navbar.Brand>
+        <Icon.CreditCardFill color='yellow' size="30" /><Navbar.Brand href="#home">KoPagesa</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -75,8 +76,8 @@ function NavBar() {
           </Nav>
           <Nav>
             {showU==false ? 
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-            <Link to={"/profili"}>Profili</Link>
+            <NavDropdown title="Menu" id="collasible-nav-dropdown">
+            <Link to={"/profili"} className='dropdown-item'>Profili</Link>
             
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={()=>logOut()}>
@@ -85,8 +86,8 @@ function NavBar() {
           </NavDropdown>
             : 
             <>
-            <Link to={'/regjistrohu'}>Regjistrohu</Link>
-            <Link to={'/kycu'}>Kycu</Link>
+            <Link to={'/regjistrohu'} className='nav-link'><Icon.PersonAdd color="orange" size={25} />Regjistrohu</Link>
+            <Link to={'/kycu'} className='nav-link'><Icon.BoxArrowInRight color='orange' size={25} />Kycu</Link>
             </>
           }
           </Nav>
@@ -113,7 +114,7 @@ function NavBar() {
                   target="_blank"
                   href='https://www.youtube.com/watch?v=c9B4TPnak1A'
                 >
-                  Start tutorial
+                  Krijo llogari
                 </MDBBtn>
                 <MDBBtn
                   className="m-2"
@@ -121,9 +122,9 @@ function NavBar() {
                   outline
                   size="lg"
                   target="_blank"
-                  href='https://mdbootstrap.com/docs/standard/'
+                  href='https://localhost:7235/api/Perdoruesi/download/manual'
                 >
-                  Download MDB UI KIT
+                  Shkarko udhëzuesin
                 </MDBBtn>
               </div>
             </div>

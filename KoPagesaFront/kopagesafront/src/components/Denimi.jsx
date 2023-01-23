@@ -14,7 +14,7 @@ function Denimi() {
    <>
     { 
         data!=undefined ?
-    <div class="page-content container" style={{backgroundColor: "rgb(228, 241, 14)"}}>
+    <div class="page-content container pt-5" style={{backgroundColor: "rgb(228, 241, 14)"}}>
     <div class="page-header text-blue-d2">
         <h1 class="page-title text-secondary-d1">
             Gjoba 
@@ -57,7 +57,7 @@ function Denimi() {
                 <div class="row">
                     <div class="col-sm-6">
                         <div>
-                            <span class="text-sm text-grey-m2 align-middle">To:</span>
+                            <span class="text-sm text-grey-m2 align-middle"></span>
                             <span class="text-600 text-110 text-blue align-middle"></span>
                         </div>
                         <div class="text-grey-m2">
@@ -90,7 +90,7 @@ function Denimi() {
                 <div class="mt-4">
                     <div class="row text-600 text-white bgc-default-tp1 py-25">
                         <div class="">
-                            <p>{data.pershkrimi}</p>
+                            <p className='text-center'>{data.pershkrimi}</p>
                         </div>
                         
                     </div>
@@ -135,8 +135,8 @@ function Denimi() {
                     <hr />
 
                     <div>
-                        <span class="text-secondary-d1 text-105">Thank you for your business</span>
-                        <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Pay Now</a>
+                        <span class="text-secondary-d1 text-105 text-center">Policia e Kosoves/Gjobe/KOPagesa</span>
+                        
                     </div>
                 </div>
             </div>

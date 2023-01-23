@@ -3,6 +3,7 @@ import { MDBBadge, MDBBtn, MDBTable, MDBTableBody, MDBTableHead } from 'mdb-reac
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Form, Modal, Table } from 'react-bootstrap'
 import PatentetTabela from './PatentetTabela'
+import * as Icon from 'react-bootstrap-icons'
 
 function PatentaTabela() {
     const [patenta, setPatenta]=useState([])
@@ -58,10 +59,10 @@ function PatentaTabela() {
     }
   return (
     <>
-    <div className='d-flex justify-content-between'>
+    <div className='d-flex justify-content-between mt-3 mb-3'>
       <div>
         <input type="search" onChange={(e)=>setSearch(e.target.value)}/>
-        <button className='btn btn-success' onClick={searchPatentShoferi}><i className='bi bi-search'></i></button>
+        <button className='btn btn-success' onClick={searchPatentShoferi}><Icon.Search color='white' /></button>
       </div>
       <div>
       <Button variant='primary' onClick={()=>shto()}>Shto patenten</Button>
@@ -89,7 +90,7 @@ function PatentaTabela() {
       <Modal show={shfaqShto} onHide={handleClose} className='text-center mt-5'>              
         
       <Modal.Header closeButton className='policia'>
-          <Modal.Title className='text-center'>Gjoba</Modal.Title>
+          <Modal.Title className='text-center text-warning'>Patent shoferi</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-payment">                  
           <Form>

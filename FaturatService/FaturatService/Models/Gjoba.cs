@@ -9,9 +9,9 @@ namespace FaturatService.Models
         {
         }
 
-        public void setTipi(string tipi) 
+        public override void setTipi(Fatura fatura,string tipi) 
         {
-             
+            fatura.Tipi = tipi;
         }
 
 
