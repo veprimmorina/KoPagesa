@@ -69,7 +69,8 @@ namespace KoPagesa.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(perdoruesi).State = EntityState.Modified;
+            _context.Entry(perdoruesi).
+                State = EntityState.Modified;
 
             try
             {
@@ -83,6 +84,7 @@ namespace KoPagesa.Controllers
                 }
                 else
                 {
+                
                     throw;
                 }
             }
@@ -95,7 +97,6 @@ namespace KoPagesa.Controllers
         [HttpPost]
         public async Task<ActionResult<Perdoruesi>> PostPerdoruesi(Perdoruesi perdoruesi)
         {
-            
             var p=await _perdoruesiFactory.createPerdorues(perdoruesi,perdoruesi.Roli);
             _context.perdoruesi.Add(p);
             await _context.SaveChangesAsync();
@@ -233,6 +234,25 @@ namespace KoPagesa.Controllers
             await HttpContext.SignOutAsync();
             return Ok();
         }
+        [HttpGet("polymorphism/interneti")]
+        public string getSherbimiInternetit()
+        {
+            Biznesi b = new KompaniaInternetit();
+            return b.sherbimi();
+        }
+        [HttpGet("polymorphism/uji")]
+        public string getSherbimiUjit()
+        {
+            Biznesi b = new KompaniaUjit();
+            return b.sherbimi();
+        }
+        [HttpGet("polymorphism/mbeturinat")]
+        public string getSherbimiMbeturinave()
+        {
+            Biznesi b = new KompaniaMbeturinave();
+            return b.sherbimi();
+        }
+        
         private bool PerdoruesiExists(int id)
         {
             return _context.perdoruesi.Any(e => e.PerdoruesiId == id);

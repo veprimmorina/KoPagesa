@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoPagesa;
 using KoPagesa.Models;
 using KoPagesa.Services;
+using KoPagesa.Pattern;
 
 namespace KoPagesa.Controllers
 {
@@ -152,7 +153,29 @@ namespace KoPagesa.Controllers
 
             return total + ";" + deactivated + ";" + activated;
         }
-       
+        [HttpGet("iterator")]
+        public async Task<int> IteratorImplement()
+        {
+            ConcreteAggregate collection = new ConcreteAggregate();
+            ConcreteAggregate a = new ConcreteAggregate();
+            var patenta = await _context.patenta.ToListAsync();
+
+            for (int j = 0; j < patenta.Count; j++)
+            {
+                a[j] = patenta[j].Emri + " ";
+            }
+
+            // Krijimi i iteratorit per te numruar patent shoferet
+            Iterator i = a.CreateIterator();
+            Console.WriteLine("Iterating over collection:");
+            object item = i.First();
+            while (item != null)
+            {
+                item = i.Next();
+            }
+            return i.count();
+
+        }
         private bool PatentaExists(int id)
         {
             return _context.patenta.Any(e => e.Id == id);
