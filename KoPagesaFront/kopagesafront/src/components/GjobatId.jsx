@@ -3,11 +3,13 @@ import { MDBInput } from 'mdb-react-ui-kit'
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { format } from 'date-fns'
+import { useEffect } from 'react'
 
 
 function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
     const [showM,setShowM] = useState(false)
     const [firstPage, setFirstPage] = useState(true)
+    const [dataCheck,setDat] = useState()
     const handleClose = () => {
         setShowM(false)
       }
@@ -19,7 +21,12 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
       }
     var dat = Date.parse(gjoba.data);
     var date = format(dat, 'dd/mm/yyyy');
-   
+   useEffect(()=>{
+    axios.get("https://localhost:7000/api/Gjoba/get/older/"+gjoba.id).then(response=>{
+      setDat(response.data.split("."))
+      console.log(response.data.split("."))
+    })
+   },[])
       
       const paguajGjoben = (gjobaPerPagese) => {
         axios.get("https://localhost:7000/api/Gjoba/paguaj/faturen/"+gjobaPerPagese.nrPersonal+"/"+gjobaPerPagese.id).then(response=>{
@@ -82,11 +89,13 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
               <Form.Control type="text" disabled value={gjoba.pershkrimi} readOnly></Form.Control>
               </Form.Group>
               <Form.Label>Pagesa:</Form.Label>
-              <Form.Control type="text" value={gjoba.denimi+" €"} readOnly disabled></Form.Control>
+              {dataCheck!=undefined ? <Form.Control type="text" value={dataCheck[0]>=0 && dataCheck[0]<=14 ? gjoba.denimi /2 +" €": gjoba.denimi+" €"} readOnly disabled></Form.Control>: <p></p>}
               <Form.Label>Ora dhe data:</Form.Label>
+              
               <Form.Control type="text" value={gjoba.data+" - "+gjoba.koha} disabled readOnly ></Form.Control>
               <Form.Label>Adresa:</Form.Label>
               <Form.Control type="text" value={gjoba.adresa} disabled readOnly ></Form.Control>
+             {dataCheck!=undefined ? <b className={dataCheck[0]>=0 && dataCheck[0]<=14 ? "text-success" : "text-danger"}>{dataCheck[0]>=0 && dataCheck[0]<=14 ? "Gjoba ende nuk ka kaluar periudhen 2 javore andaj ju paguani vetëm gjysmën e shumës së sajë": "Gjoba ka kaluar periudhen 2 javore andaj duhet të paguhet shuma e plotë "}</b>: <p></p>}
             </Form>
           </Modal.Body>
           <Modal.Footer>
@@ -95,8 +104,7 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
             </Button>    
             <Button variant="primary" onClick={()=>paguajFaturen()}>
               Paguaj
-            </Button>
-                         
+            </Button>   
           </Modal.Footer>
           </>
           :
@@ -105,17 +113,15 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
             <Modal.Title className='text-center invisible'>Order Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            
            <Form>
             <Form.Group>
               <Form.Label>Stripe Id:</Form.Label>
               <MDBInput wrapperClass='mb-4' className='mr-5'  id='formControlLg' type='email' size="sm"/>            </Form.Group>
-            
             <MDBInput wrapperClass='mb-4' className='mr-5 mt-4' label='Numri i karteles'  id='formControlLg' type='email' size="sm"/>
             <div className='d-flex'>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='Expiration' placeholder='MM/YY' id='formControlLg' type='email' size="sm"/>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='CVC' id='formControlLg' placeholder='CVC' type='email' size="sm" />
-              <MDBInput wrapperClass='mb-4' className='mr-5' label='Pagesa' id='formControlLg' type='email' size="sm" value={gjoba.denimi+" €"} disabled readOnly/>
+              <MDBInput wrapperClass='mb-4' className='mr-5' label='Pagesa' id='formControlLg' type='email' size="sm" value={dataCheck[0]>=0 && dataCheck[0]<=14 ? gjoba.denimi /2 +" €": gjoba.denimi+" €"} disabled readOnly/>
             </div>
             <p className=" pb-lg-2 " style={{color: '#393f81'}}>Don't have an account? </p>
            </Form>
@@ -125,14 +131,11 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
             <Button variant="secondary" onClick={()=> setFirstPage(true)}>
              Prapa
             </Button>
-       
             <Button variant="primary" onClick={()=> paguajGjoben(gjoba)}>
               Paguaj
             </Button>
-           
           </Modal.Footer>
           </>
-
           }
         </Modal>
          </>

@@ -19,6 +19,8 @@ import ShikoPatentenModal from "./components/ShikoPatentenModal";
 import Denimi from "./components/Denimi";
 import GjobatId from "./components/GjobatId";
 import Fatura from "./components/Fatura";
+import DashboardLogIn from "./components/DashboardLogIn";
+
 
 
 function App() {
@@ -38,6 +40,7 @@ return(
       <Route path="/denimi" element={<Denimi />}></Route>
       <Route path="/gjoba/:id" element={<Denimi />}></Route>
       <Route path="profili/fatura/:id" element={<Fatura />}></Route>
+      <Route path="policia/dash/login" element={<DashboardLogIn />}></Route>
     </Routes>
   </BrowserRouter>
 )

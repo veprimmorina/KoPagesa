@@ -40,7 +40,9 @@ function Patenta() {
    {
     perdoruesi!=undefined ?
     <>
-    {nrGjobave==1 ? <><b className='text-danger'>1 Gjobë pa paguar</b><Button variant='dark'onClick={()=>shfaqDenimet(perdoruesi.numriPersonal)} >Shfaq</Button></> : nrGjobave==0 ? "" : <><b className='text-center text-danger'>{nrGjobave+" gjoba pa paguar"}</b><Button variant='danger' className={buton+' ml-5'} onClick={()=> shfaqDenimet(perdoruesi.numriPersonal)}>Shfaq</Button></>}
+    <div className='text-center mt-3'>
+    {nrGjobave==1 ? <><b className='text-danger '>1 Gjobë pa paguar</b><Button variant='dark' onClick={()=>shfaqDenimet(perdoruesi.numriPersonal)} >Shfaq</Button></> : nrGjobave==0 ? "" : <><b className='text-center text-danger'>{nrGjobave+" gjoba pa paguar"}</b><Button variant='danger' className={buton+' ml-5'} onClick={()=> shfaqDenimet(perdoruesi.numriPersonal)}>Shfaq</Button></>}
+    </div>
     <div className='main row'>
     <div className='kosovo'></div>
   <div className='col-md '>

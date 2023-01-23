@@ -13,6 +13,7 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using Syncfusion.Drawing;
 using System.IO;
+using System.Globalization;
 
 namespace FaturatService.Controllers
 {
@@ -171,6 +172,44 @@ namespace FaturatService.Controllers
             string total = nrGjobave + ";" + nrGjobavePaguar + ";" + nrGjobavePaPaguar+";"+gjobaSot;
 
             return total;
+        }
+        [HttpGet("get/older/{id}")]
+        public async Task<TimeSpan> isOlderThanTwoWeeks(int id)
+        {
+            var gjoba = await _context.gjoba.FindAsync(id);
+            var data = gjoba.Data;
+
+            var ex = DateTime.ParseExact(data, "yyyy-mm-dd", CultureInfo.InvariantCulture);
+            DateTime now = DateTime.Now;
+            return now - ex ;
+           
+        }
+        [HttpGet("get/stats/month/{monthnumber}")]
+        public async Task<string> getMonthStats(string monthnumber)
+        {
+            var gjoba = await _context.gjoba.ToListAsync();
+            
+            int countGjoba = 0;
+            int countGjobaPaPaguar = 0;
+            int countGjobaTePaguara = 0;
+           
+            for (int i = 0; i < gjoba.Count; i++)
+            {
+                string[] muajiGjobes = gjoba[i].Data.Split("-");
+               if (muajiGjobes[1].Equals(monthnumber))
+                {
+                    countGjoba++;
+                }
+                if (muajiGjobes[1].Equals(monthnumber) && gjoba[i].EPaguar.Equals(false))
+                {
+                    countGjobaPaPaguar++;
+                }
+                if (muajiGjobes[1].Equals(monthnumber) && gjoba[i].EPaguar.Equals(true))
+                {
+                    countGjobaTePaguara++;
+                }
+            }
+            return countGjoba+";"+countGjobaPaPaguar+";"+countGjobaTePaguara;
         }
         private bool GjobaExists(int id)
         {

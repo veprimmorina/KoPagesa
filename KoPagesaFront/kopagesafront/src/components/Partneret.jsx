@@ -2,7 +2,7 @@ import React from 'react'
 
 function Partneret() {
   return (
-    <section class="section section-default mt-none mb-none">
+    <section class="section section-default mt-none mb-5">
 <div class="container">
 <h2 class="mb-sm"><strong>Ne Partneritet me </strong></h2>
 <strong>

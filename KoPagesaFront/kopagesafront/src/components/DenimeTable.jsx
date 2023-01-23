@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal, Table } from 'react-bootstrap'
 import DenimetTable from './DenimetTable'
+import * as Icon from 'react-bootstrap-icons';
 
 function DenimeTable() {
     const [denimet, setDenimet]=useState([])
@@ -54,7 +55,7 @@ function DenimeTable() {
     setShowM(false)
     }
     const dataSearch = () =>{
-      alert(kerkoData)
+      
         axios.get("https://localhost:7000/api/Gjoba/get/by/date/"+kerkoData).then(response=>{
           setDenimet(response.data)
         })
@@ -73,14 +74,14 @@ function DenimeTable() {
     }
   return (
     <>
-    <div className='d-flex justify-content-between'>
+    <div className='d-flex justify-content-between mt-3 mb-3'>
       <div>
       <input type="search" onChange={(e)=>setSearch(e.target.value)}/>
-      <button className='btn btn-success' onClick={searchDenimet}><i className='bi bi-search'></i></button>
+      <button className='btn btn-success' onClick={searchDenimet}><Icon.Search color='white' /></button>
     </div>
     <div>
       <input type="date" onChange={(e)=> setKerkoData(e.target.value)}/>
-      <Button variant="success" onClick={()=>dataSearch()}>Kërko</Button>
+      <Button variant="success" onClick={()=>dataSearch()}><Icon.Search color='white' /></Button>
     </div>
     <div>
     <Button variant='primary' onClick={()=>setShowM(true)}>Shto denimin</Button>
