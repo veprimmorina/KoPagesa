@@ -12,7 +12,11 @@ using Microsoft.AspNetCore.Authentication;
 using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
+using Syncfusion.Pdf.Graphics;
 
+
+using Syncfusion.Pdf;
+using Syncfusion.HtmlConverter;
 namespace KoPagesa.Controllers
 {
     [Route("api/[controller]")]
@@ -195,6 +199,23 @@ namespace KoPagesa.Controllers
             {
                 return "0";
             }
+        }
+
+        [HttpGet("iron/download/{id}")]
+        public IActionResult ExportToPDF(int id)
+        {
+            HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+
+            //Convert URL to PDF document
+            PdfDocument document = htmlConverter.Convert("http://localhost:3000/profili/fatura/"+id);
+
+            //Create memory stream
+            MemoryStream stream = new MemoryStream();
+
+            //Save the document
+            document.Save(stream);
+
+            return File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf, "Fatura.pdf");
         }
         [HttpGet("decrypt/{username}")]
         public async Task<ActionResult<Perdoruesi>> Decrypted(string username)
