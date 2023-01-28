@@ -33,7 +33,6 @@ function DenimeTable() {
       setEmri(patenti.emri)
       setNumriPersonal(patenti.numriPersonal)
       setMbiemri(patenti.mbiemri)
-      
       setShowM(true)
     }
     const shtoDenimin = () => {
@@ -55,7 +54,6 @@ function DenimeTable() {
     setShowM(false)
     }
     const dataSearch = () =>{
-      
         axios.get("https://localhost:7000/api/Gjoba/get/by/date/"+kerkoData).then(response=>{
           setDenimet(response.data)
         })
