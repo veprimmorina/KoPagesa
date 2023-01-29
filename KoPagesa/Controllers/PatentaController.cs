@@ -176,6 +176,30 @@ namespace KoPagesa.Controllers
             return i.count();
 
         }
+        [HttpGet("get/stats/month/{monthnumber}")]
+        public async Task<string> getMonthStats(string monthnumber)
+        {
+            var patenta = await _context.patenta.ToListAsync();
+
+            int countPatenta = 0;
+            int countPatentaTeSkaduara = 0;
+
+            for (int i = 0; i < patenta.Count; i++)
+            {
+                string[] muajiPatentes = patenta[i].DataLeshimit.Split("-");
+                if (muajiPatentes[1].Equals(monthnumber))
+                {
+                    countPatenta++;
+                }
+                string[] muajiSkadences = patenta[i].DataSkadences.Split("-");
+                string CurrentYear = DateTime.Now.Year.ToString();
+                if (muajiSkadences[1].Equals(monthnumber)&& muajiSkadences[2].Equals(CurrentYear))
+                {
+                    countPatentaTeSkaduara++;
+                }
+            }
+            return countPatenta+";"+countPatentaTeSkaduara;
+        }
         private bool PatentaExists(int id)
         {
             return _context.patenta.Any(e => e.Id == id);

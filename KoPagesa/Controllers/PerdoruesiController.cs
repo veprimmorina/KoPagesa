@@ -21,6 +21,15 @@ using System.Reflection.Metadata;
 using KoPagesa.Pattern;
 using KoPagesa.Exception;
 using KoPagesa.Services;
+using System.Drawing.Printing;
+using System.Drawing;
+using System.Xml.Linq;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Drawing;
+using System.IO;
+using PointF = Syncfusion.Drawing.PointF;
+using RectangleF = Syncfusion.Drawing.RectangleF;
 
 namespace KoPagesa.Controllers
 {
@@ -252,10 +261,32 @@ namespace KoPagesa.Controllers
             Biznesi b = new KompaniaMbeturinave();
             return b.sherbimi();
         }
+        [HttpGet("download/manual")]
+        public async Task<IActionResult> GetManual()
+        {
+            var path = "C:\\Users\\TECHCOM\\Downloads\\Untitled design.png";
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(memory, GetMimeType()[ext], Path.GetFileName(path));
+        }
+        
         
         private bool PerdoruesiExists(int id)
         {
             return _context.perdoruesi.Any(e => e.PerdoruesiId == id);
+        }
+        private Dictionary<string,string> GetMimeType()
+        {
+            return new Dictionary<string, string>
+            {
+                {".png","image/png" },
+                {".pdf","application/pdf" }
+            };
         }
     }
 }
