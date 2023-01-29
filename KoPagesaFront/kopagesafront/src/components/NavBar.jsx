@@ -44,7 +44,7 @@ function NavBar() {
       axios.get("https://localhost:7235/api/Perdoruesi/decrypt/"+cn).then(response=>{
         setUser(response.data.emri+" "+response.data.mbiemri)  
     })
-  })
+  },[])
   const logOut =()=>{
     axios.post("https://localhost:7235/api/Perdoruesi/logout").then(response=>{
       document.cookie = "cname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

@@ -16,13 +16,13 @@ namespace FaturatService.Controllers
     public class FaturasController : ControllerBase, IFatura
     {
         private readonly FaturaContext _context;
-        private FaturaContextStrategy _faturaContext;
+        private FaturaContextStrategy _faturaContextStrategy;
         
         
         public FaturasController(FaturaContext context, FaturaContextStrategy faturaContext)
         {
             _context = context;
-            _faturaContext = faturaContext;    
+            _faturaContextStrategy = faturaContext;    
         }
 
         // GET: api/Faturas
@@ -82,7 +82,7 @@ namespace FaturatService.Controllers
         [HttpPost]
         public async Task<ActionResult<Fatura>> PostFatura(Fatura fatura)
         {
-                var faturaRe = await _faturaContext.setTipi(fatura);
+                var faturaRe = await _faturaContextStrategy.setTipi(fatura);
                 _context.Fatura.Add(faturaRe);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetFatura", new { id = fatura.Id }, fatura);

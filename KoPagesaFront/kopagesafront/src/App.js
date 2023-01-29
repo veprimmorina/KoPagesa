@@ -22,6 +22,9 @@ import Fatura from "./components/Fatura";
 import DashboardLogIn from "./components/DashboardLogIn";
 import NumberContext from "./components/NumberContext";
 import Display from "./components/Display";
+import Suses from "./components/Suses";
+import IpkoDashboard from "./components/IpkoDashboard";
+import DashboardNavbar from "./components/DashboardNavbar";
 
 
 
@@ -48,7 +51,8 @@ return(
       <Route path="profili/fatura/:id" element={<Fatura />}></Route>
       <Route path="policia/dash/login" element={<DashboardLogIn />}></Route>
       <Route path="nr" element={<NumberContext />}></Route>
-      
+      <Route path="success" element={<Suses />}></Route>
+      <Route path="dashboard/internet" element={<DashboardNavbar />}></Route>
     </Routes>
   </BrowserRouter>
   

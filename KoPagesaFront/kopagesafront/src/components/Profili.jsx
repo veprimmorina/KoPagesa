@@ -124,8 +124,8 @@ function Profili() {
         console.log(response.data)
         axios.post("https://localhost:7208/api/Pagesats/konfirmo/pagesen/"+user.emri+"/"+user.mbiemri+"/"+Customer.amount+"/"+pershkrimi+"/"+user.emaili).then(response=>{
           setErrorMessage("")
-          setSuccessMessage("Pagesa u realizua me sukses!")
           console.log(response.data)
+          window.location.href="http://localhost:3000/success"
         })
         setShowM(false)
       })
@@ -318,8 +318,8 @@ function Profili() {
           <Form>
             <Form.Group>
               <Form.Label>Pagese per:</Form.Label>
-              <select className='form-control' onChange={(e)=>setAddDescription(e.value.target)}>
-                <option placeholder='Zgjedh nje nga kompanitë'></option>
+              <select className='form-control' onChange={(e)=>setAddDescription(e.target.value)}>
+                <option>Zgjedh njeren nga kompanitë</option>
                 <option value="Internet">Internet - IPKO </option>
                 <option value="Uji">Uji - Hidro Regjioni</option>
                 <option value="Mbeturina">Mbeturina - Eko Regjioni</option>
@@ -349,7 +349,7 @@ function Profili() {
           <Modal.Header className="stripe">
             <Modal.Title className='text-center invisible'>Order Details</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='modal-payment-body'>
             
            <Form>
            
@@ -357,14 +357,14 @@ function Profili() {
             <MDBInput wrapperClass='mb-4' className='mr-5 mt-4' label='Numri i karteles'  id='formControlLg' type='email' size="sm" onChange={(e)=>setNumriKarteles(e.target.value)}/>
             <div className='d-flex'>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='Expiration' placeholder='MM/YY' id='formControlLg' type='email' size="sm" onChange={(e)=>setExpiration(e.target.value)}/>
-              <MDBInput wrapperClass='mb-4' className='mr-5' label='CVC' id='formControlLg' placeholder='CVC' type='email' size="sm" onChange={(e)=>setCVC(e.target.value)}/>
+              <MDBInput wrapperClass='mb-4' className='mr-5' label='CVC' id='formControlLg' placeholder='CVC' type='password' size="sm" onChange={(e)=>setCVC(e.target.value)}/>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='Pagesa' id='formControlLg' type='email' size="sm" value={pagesa+"€"} disabled />
             </div>
             <p className=" pb-lg-2 " style={{color: '#393f81'}}>Don't have an account? </p>
            </Form>
            <p className="text-danger">{errorMessage}</p>
           </Modal.Body>
-          <Modal.Footer className="payment">
+          <Modal.Footer className="payment-modal modal-payment-body">
             <Button variant="secondary" onClick={()=> setFirstPage(true)}>
              Prapa
             </Button>

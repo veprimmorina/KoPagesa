@@ -117,8 +117,10 @@ namespace PagesaService.Controllers
         [HttpPost("konfirmo/pagesen/{emri}/{mbiemri}/{shuma}/{pershkrimi}/{email}")]
         public async Task<IActionResult> KonfirmoPagesen(string emri, string mbiemri, string shuma, string pershkrimi, string email)
         {
+            int shumaI= int.Parse(shuma);
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("kopagesa@gmail.com");
+            
             mailMessage.To.Add(email);
             mailMessage.Subject = "Njoftim i ri";
             mailMessage.Body = "I/E Nderuar <b>"+emri+" "+mbiemri+"</b><br><br> Me ane te ketij emaili ne konfirmojme pagesen tuaj nepermjet aplikacionit KOPagesa. <br><br>Detajet e Pageses: " +
