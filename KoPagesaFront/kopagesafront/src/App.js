@@ -20,11 +20,16 @@ import Denimi from "./components/Denimi";
 import GjobatId from "./components/GjobatId";
 import Fatura from "./components/Fatura";
 import DashboardLogIn from "./components/DashboardLogIn";
+import NumberContext from "./components/NumberContext";
+import Display from "./components/Display";
 
 
 
 function App() {
 return(
+
+
+  
   <BrowserRouter>
     <Routes>
       <Route path="dashboard/policet/patenta/:id" element={<Patenta />}></Route>
@@ -33,7 +38,8 @@ return(
       <Route path="/profili" element={<Profili />}></Route>
       <Route path="/policet/profile" element={<PolicetProfile />}></Route>
       <Route path="/gjobat/:numripersonal" element={<GjobatPolice />}></Route>
-      <Route path="/dashboard/policet" element={<PoliciaDashboard />}></Route>
+      <Route path="/dashboard/policet" element={<PoliciaDashboard />
+      }></Route>
       <Route path="/regjistrohu" element={<Regjistrohu />}></Route>
       <Route path="/kycu" element={<Kycu />}></Route>
       <Route path="/profili/:id" element={<ShikoPatentenModal />}></Route>
@@ -41,9 +47,14 @@ return(
       <Route path="/gjoba/:id" element={<Denimi />}></Route>
       <Route path="profili/fatura/:id" element={<Fatura />}></Route>
       <Route path="policia/dash/login" element={<DashboardLogIn />}></Route>
+      <Route path="nr" element={<NumberContext />}></Route>
+      
     </Routes>
   </BrowserRouter>
+  
+ 
 )
-}
 
+
+}
 export default App;

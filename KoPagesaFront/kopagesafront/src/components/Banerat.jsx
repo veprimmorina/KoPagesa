@@ -12,8 +12,9 @@ function Banerat() {
                     <div class='radio selected mx-auto baner' data-value="dk"> <ul><li></li></ul></div>
                   </div>
             </div>
+            <b className='mt-5 pt-3 text-center text-white'>Sigurtë</b>
             </Card>
-            <b>Shpejte</b>
+            
         </div>
         <div className='col-md text-center '>
             <Card className='baner-2 h-100 shadow'>
@@ -22,7 +23,7 @@ function Banerat() {
                     <div class='radio selected mx-auto baner' data-value="dk"> <ul><li></li></ul></div>
                   </div>
             </div>
-            <b className='mt-5 pt-3'>Shpejte</b>
+            <b className='mt-5 pt-3'>Shpejtë</b>
             </Card>
         </div>
         <div className='col-md'>
@@ -32,7 +33,7 @@ function Banerat() {
                     <div class='radio selected mx-auto baner' data-value="dk"> <ul><li></li></ul></div>
                   </div>
             </div>
-            <b>Sigurt</b>
+            <b className='mt-5 pt-3 text-center text-warning'>Saktë</b>
             </Card>
         </div>
     </div>
