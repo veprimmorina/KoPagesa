@@ -8,9 +8,11 @@ import GjobatEPaguara from './GjobatEPaguara';
 import ShikoPatentenModal from './ShikoPatentenModal';
 import * as Icon from 'react-bootstrap-icons'
 import { format } from 'date-fns'
+import FaturaIpkoUser from './FaturaIpkoUser';
+import { createContext } from 'react';
 
 
-
+export const Context = createContext();
 function Profili() {
 
   const [gjobat, setGjobat] = useState();
@@ -33,7 +35,8 @@ function Profili() {
   const [njoftimet, setNjoftimet] = useState()
   const [addDescription, setAddDescription] = useState()
   const [category, setCategory] = useState("Te gjitha")
-
+  const [shfaqFaturatInternetit, setShowFaturatInternetit] = useState()
+  const [faturaInternetitPerdorues, setFaturaInternetitPerdorues] = useState()
   useEffect(()=>{
       let name = "cname" + "=";
       
@@ -64,6 +67,10 @@ function Profili() {
         })
         axios.get("https://localhost:7208/api/Pagesats/personal/payment/"+response.data.numriPersonal).then(response=>{
         setGjobatEPaguara(response.data)
+         })
+         axios.get('https://localhost:7000/api/Faturas/fatura/perdoruesit/'+response.data.numriPersonal).then(response=>{
+          setFaturaInternetitPerdorues(response.data)
+          console.log(response.data)
          })
         })
       
@@ -101,7 +108,10 @@ function Profili() {
       setPatentShoferi(false)
     }
   }
-
+  const shfaqFaturat = () =>{
+    setShowFaturatInternetit(true)
+    setMainDiv(false)
+  }
   const paguaj = () => {
     if(user.numriKarteles!=numriKarteles){
       setErrorMessage("Numri i karteles eshte gabim")
@@ -144,12 +154,13 @@ function Profili() {
               <li className='breadcrumb-item'>
               <i className="bi bi-bell-fill"></i>
               <NavDropdown title="" id="collasible-nav-dropdown">
-              <NavDropdown.Item onClick={()=>{setShfaqPatenten(true);setMainDiv(false)}}>Shiko patent shoferin</NavDropdown.Item>
-              <NavDropdown.Item onClick={()=>{setShfaqPatenten(false);setMainDiv(true)}}>
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(true);setMainDiv(false);setShowFaturatInternetit(false)}}>Shiko patent shoferin</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(false);setMainDiv(true);setShowFaturatInternetit(false)}}>
                 Profili
               </NavDropdown.Item>
               <NavDropdown.Item onClick={()=>logOut()}>Log out</NavDropdown.Item>
               <NavDropdown.Divider />
+              <NavDropdown.Item onClick={()=>shfaqFaturat()}>Faturat e Internetit</NavDropdown.Item>
             </NavDropdown>
               </li>
             </ol>
@@ -299,6 +310,11 @@ function Profili() {
         </div>
     </div>
     {patenten && <ShikoPatentenModal perdoruesi={patenta!=undefined ? patenta : ""}/> }
+    {shfaqFaturatInternetit && 
+      <Context.Provider value={faturaInternetitPerdorues}>
+        <FaturaIpkoUser user={user} email={user.emaili}/>
+        </Context.Provider>
+    } 
      </> : 
      <>
       <div className='p-error'>

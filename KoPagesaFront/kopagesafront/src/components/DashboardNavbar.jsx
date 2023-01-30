@@ -70,9 +70,9 @@ function DashboardNavbar() {
       </li>
 
       <li class="nav-item me-3 me-lg-1">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="#" onClick={()=>setShtoFaturen('shfaqPagesat')}>
           <span><i class="fas fa-users fa-lg"></i></span>
-          <span class="badge rounded-pill badge-notification bg-danger">2</span>
+          <span class="badge rounded-pill badge-notification bg-danger">Pagesat</span>
         </a>
       </li>
     </ul>

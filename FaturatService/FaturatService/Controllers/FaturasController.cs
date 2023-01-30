@@ -103,7 +103,21 @@ namespace FaturatService.Controllers
 
             return NoContent();
         }
-
+        [HttpGet("fatura/perdoruesit/{numripersonal}")]
+        public async Task<ActionResult<IEnumerable<Fatura>>> GetFaturaByNumber(string numripersonal)
+        {
+            var fatura = await _context.Fatura.Where(x => x.NrPersonal.Equals(numripersonal) && x.Adresa.Equals("IPKO") && x.EPaguar.Equals(false)).ToListAsync();
+            return fatura;
+        }
+        [HttpGet("paguaj/faturen/{id}")]
+        public async Task<IActionResult> PaguajFaturen(int id)
+        {
+            var fatura = await _context.Fatura.FindAsync(id);
+            fatura.EPaguar = true;
+            _context.Update(fatura);
+            await _context.SaveChangesAsync();
+            return Ok();
+        } 
         private bool FaturaExists(int id)
         {
             return _context.Fatura.Any(e => e.Id == id);

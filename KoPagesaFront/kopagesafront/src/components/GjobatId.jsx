@@ -57,6 +57,7 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
               }
               axios.post("https://localhost:7208/api/Pagesats/gjoba",Fatura).then(response=>{
                 console.log(response.data)
+                window.location.href('http://localhost:3000/success')
             })
             setShowM(false)
             })

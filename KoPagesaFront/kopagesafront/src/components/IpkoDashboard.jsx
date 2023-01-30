@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { useState } from 'react'
 import { Context } from './DashboardNavbar'
 import InternetShtoFaturen from './InternetShtoFaturen'
+import InternetTabela from './InternetTabela'
 import Karta from './Karta'
 
 function IpkoDashboard() {
@@ -10,8 +11,9 @@ function IpkoDashboard() {
   return (
     <>
     {value=='shtoFaturen' ? <InternetShtoFaturen /> : 
+    value=='shfaqPagesat' ?  <InternetTabela /> :
     <div className='d-flex'>
-        <div className='w-100'>
+        <div className='w-100'> 
           <div >
            
               <>
@@ -76,7 +78,7 @@ function IpkoDashboard() {
               
           </div>
         </div>
-      </div>
+      </div> 
 }
     </>
   )
