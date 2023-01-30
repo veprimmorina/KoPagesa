@@ -30,6 +30,9 @@ using Syncfusion.Drawing;
 using System.IO;
 using PointF = Syncfusion.Drawing.PointF;
 using RectangleF = Syncfusion.Drawing.RectangleF;
+using Microsoft.IdentityModel.Tokens;
+using static Org.BouncyCastle.Math.EC.ECCurve;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace KoPagesa.Controllers
 {
@@ -39,11 +42,13 @@ namespace KoPagesa.Controllers
     {
         private readonly PerdoruesitContext _context;
         private PerdoruesiFactory _perdoruesiFactory;
+        private readonly IConfiguration _config;
 
-        public PerdoruesiController(PerdoruesitContext context, PerdoruesiFactory perdoruesiFactory)
+        public PerdoruesiController(PerdoruesitContext context, PerdoruesiFactory perdoruesiFactory, IConfiguration config)
         {
             _context = context;
             _perdoruesiFactory = perdoruesiFactory;
+            _config = config;
         }
 
         // GET: api/Perdoruesi
@@ -244,22 +249,27 @@ namespace KoPagesa.Controllers
             return Ok();
         }
         [HttpGet("polymorphism/interneti")]
-        public string getSherbimiInternetit()
+        public void getSherbimiInternetit()
         {
-            Biznesi b = new KompaniaInternetit();
+           /* Biznesi b = new KompaniaInternetit(,"","","","","","","");
             return b.sherbimi();
+           */
         }
         [HttpGet("polymorphism/uji")]
-        public string getSherbimiUjit()
+        public void getSherbimiUjit()
         {
+            /*
             Biznesi b = new KompaniaUjit();
             return b.sherbimi();
+            */
         }
         [HttpGet("polymorphism/mbeturinat")]
-        public string getSherbimiMbeturinave()
+        public void getSherbimiMbeturinave()
         {
+            /*
             Biznesi b = new KompaniaMbeturinave();
             return b.sherbimi();
+            */
         }
         [HttpGet("download/manual")]
         public async Task<IActionResult> GetManual()
@@ -274,8 +284,18 @@ namespace KoPagesa.Controllers
             var ext = Path.GetExtension(path).ToLowerInvariant();
             return File(memory, GetMimeType()[ext], Path.GetFileName(path));
         }
-        
-        
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> LogIn(User req)
+        {
+            var perdoruesi = await _context.perdoruesi.Where(x => x.Emaili.Equals(req.UserName) && x.Fjalkalimi.Equals(req.Password)).FirstOrDefaultAsync();
+            if (perdoruesi == null)
+            {
+                return BadRequest("not found");
+            }
+            string token = createToken(req);
+            return perdoruesi.Roli.Equals(2) ? Ok(token) : BadRequest("Not Authorized");
+        }
+
         private bool PerdoruesiExists(int id)
         {
             return _context.perdoruesi.Any(e => e.PerdoruesiId == id);
@@ -287,6 +307,25 @@ namespace KoPagesa.Controllers
                 {".png","image/png" },
                 {".pdf","application/pdf" }
             };
+        }
+        private string createToken(User user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+            };
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+                _config.GetSection("AppSettings:Token").Value));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds);
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return jwt;
         }
     }
 }
