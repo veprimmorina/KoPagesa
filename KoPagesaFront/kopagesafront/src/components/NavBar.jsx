@@ -44,7 +44,7 @@ function NavBar() {
       axios.get("https://localhost:7235/api/Perdoruesi/decrypt/"+cn).then(response=>{
         setUser(response.data.emri+" "+response.data.mbiemri)  
     })
-  })
+  },[])
   const logOut =()=>{
     axios.post("https://localhost:7235/api/Perdoruesi/logout").then(response=>{
       document.cookie = "cname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -60,9 +60,9 @@ function NavBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+            <Nav.Link href="#features">Rreth nesh</Nav.Link>
+            <Nav.Link href="#pricing">Mundesite e pageses</Nav.Link>
+            <NavDropdown title="Më shumë" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action

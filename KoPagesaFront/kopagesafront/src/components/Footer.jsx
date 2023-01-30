@@ -8,35 +8,31 @@ import {
     MDBRow,
     MDBBtn
   } from 'mdb-react-ui-kit';
+  import * as Icon from'react-bootstrap-icons'
 
 function Footer() {
     return (
         <MDBFooter className='text-center' color='white' bgColor='dark'>
           <MDBContainer className='p-4'>
             <section className='mb-4'>
+              
+    
               <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                <MDBIcon fab icon='facebook-f' />
+              <Icon.Twitter color='blue' />
               </MDBBtn>
     
               <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                <MDBIcon fab icon='twitter' />
+              <Icon.Google color='green' />
               </MDBBtn>
     
               <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                <MDBIcon fab icon='google' />
+              <Icon.Instagram color='red' />
               </MDBBtn>
     
               <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                <MDBIcon fab icon='instagram' />
+                <Icon.Facebook color='blue'/>
               </MDBBtn>
     
-              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                <MDBIcon fab icon='linkedin-in' />
-              </MDBBtn>
-    
-              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                <MDBIcon fab icon='github' />
-              </MDBBtn>
             </section>
     
             <section className=''>
@@ -72,110 +68,94 @@ function Footer() {
             <section className=''>
               <MDBRow>
                 <MDBCol lg='3' md='6' className='mb-4 mb-md-0'>
-                  <h5 className='text-uppercase'>Links</h5>
+                  <h5 className='text-uppercase'>KoPagesa</h5>
     
                   <ul className='list-unstyled mb-0'>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 1
+                        Rreth nesh
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 2
+                        Pagesa
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 3
+                        Manuali
                       </a>
                     </li>
-                    <li>
-                      <a href='#!' className='text-white'>
-                        Link 4
-                      </a>
-                    </li>
+                   
                   </ul>
                 </MDBCol>
     
                 <MDBCol lg='3' md='6' className='mb-4 mb-md-0'>
-                  <h5 className='text-uppercase'>Links</h5>
+                  <h5 className='text-uppercase'>Sherbime</h5>
     
                   <ul className='list-unstyled mb-0'>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 1
+                        Regjistrohu
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 2
+                        Kycu
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 3
+                        Krijo llogari
                       </a>
                     </li>
-                    <li>
-                      <a href='#!' className='text-white'>
-                        Link 4
-                      </a>
-                    </li>
+                    
                   </ul>
                 </MDBCol>
     
                 <MDBCol lg='3' md='6' className='mb-4 mb-md-0'>
-                  <h5 className='text-uppercase'>Links</h5>
+                  <h5 className='text-uppercase'>Gjoba</h5>
     
                   <ul className='list-unstyled mb-0'>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 1
+                        Gjobat e mia
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 2
+                       Gjobat e paguara
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 3
+                        Gjobat pa paguar
                       </a>
                     </li>
-                    <li>
-                      <a href='#!' className='text-white'>
-                        Link 4
-                      </a>
-                    </li>
+                    
                   </ul>
                 </MDBCol>
     
                 <MDBCol lg='3' md='6' className='mb-4 mb-md-0'>
-                  <h5 className='text-uppercase'>Links</h5>
+                  <h5 className='text-uppercase'>Rreth aplikacionit</h5>
     
                   <ul className='list-unstyled mb-0'>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 1
+                        Vleresime
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 2
+                        Ankesa
                       </a>
                     </li>
                     <li>
                       <a href='#!' className='text-white'>
-                        Link 3
+                        Kerkesa
                       </a>
                     </li>
-                    <li>
-                      <a href='#!' className='text-white'>
-                        Link 4
-                      </a>
-                    </li>
+                    
                   </ul>
                 </MDBCol>
               </MDBRow>
@@ -185,7 +165,7 @@ function Footer() {
           <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
             © 2020 Copyright:
             <a className='text-white' href='https://mdbootstrap.com/'>
-              MDBootstrap.com
+              KOPagesa
             </a>
           </div>
         </MDBFooter>

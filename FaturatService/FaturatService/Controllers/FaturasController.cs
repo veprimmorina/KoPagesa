@@ -16,13 +16,13 @@ namespace FaturatService.Controllers
     public class FaturasController : ControllerBase, IFatura
     {
         private readonly FaturaContext _context;
-        private FaturaContextStrategy _faturaContext;
+        private FaturaContextStrategy _faturaContextStrategy;
         
         
         public FaturasController(FaturaContext context, FaturaContextStrategy faturaContext)
         {
             _context = context;
-            _faturaContext = faturaContext;    
+            _faturaContextStrategy = faturaContext;    
         }
 
         // GET: api/Faturas
@@ -82,7 +82,7 @@ namespace FaturatService.Controllers
         [HttpPost]
         public async Task<ActionResult<Fatura>> PostFatura(Fatura fatura)
         {
-                var faturaRe = await _faturaContext.setTipi(fatura);
+                var faturaRe = await _faturaContextStrategy.setTipi(fatura);
                 _context.Fatura.Add(faturaRe);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetFatura", new { id = fatura.Id }, fatura);
@@ -103,7 +103,21 @@ namespace FaturatService.Controllers
 
             return NoContent();
         }
-
+        [HttpGet("fatura/perdoruesit/{numripersonal}")]
+        public async Task<ActionResult<IEnumerable<Fatura>>> GetFaturaByNumber(string numripersonal)
+        {
+            var fatura = await _context.Fatura.Where(x => x.NrPersonal.Equals(numripersonal) && x.Adresa.Equals("IPKO") && x.EPaguar.Equals(false)).ToListAsync();
+            return fatura;
+        }
+        [HttpGet("paguaj/faturen/{id}")]
+        public async Task<IActionResult> PaguajFaturen(int id)
+        {
+            var fatura = await _context.Fatura.FindAsync(id);
+            fatura.EPaguar = true;
+            _context.Update(fatura);
+            await _context.SaveChangesAsync();
+            return Ok();
+        } 
         private bool FaturaExists(int id)
         {
             return _context.Fatura.Any(e => e.Id == id);

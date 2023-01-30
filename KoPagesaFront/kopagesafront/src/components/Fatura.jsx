@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 function Fatura() {
     const {id} = useParams();
     const [data, setData] = useState()
-    const [url,setUrl] = useState()
+    const [url,setUrl] = useState("")
     useEffect(()=>{
         axios.get("https://localhost:7208/api/Pagesats/"+id).then(response=>{
             setData(response.data)
@@ -33,11 +33,12 @@ function Fatura() {
 
         <div class="page-tools pb-5">
             <div class="action-buttons pb-5">
-               
+              
                 <a class="btn bg-white btn-light mx-1px text-95" target="_blank" href={url} data-title="PDF">
                     
                     Shkarko
-                </a>
+                </a> 
+            
             </div>
         </div>
     </div>

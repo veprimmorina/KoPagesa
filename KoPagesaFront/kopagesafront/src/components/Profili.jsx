@@ -8,9 +8,11 @@ import GjobatEPaguara from './GjobatEPaguara';
 import ShikoPatentenModal from './ShikoPatentenModal';
 import * as Icon from 'react-bootstrap-icons'
 import { format } from 'date-fns'
+import FaturaIpkoUser from './FaturaIpkoUser';
+import { createContext } from 'react';
 
 
-
+export const Context = createContext();
 function Profili() {
 
   const [gjobat, setGjobat] = useState();
@@ -33,7 +35,8 @@ function Profili() {
   const [njoftimet, setNjoftimet] = useState()
   const [addDescription, setAddDescription] = useState()
   const [category, setCategory] = useState("Te gjitha")
-
+  const [shfaqFaturatInternetit, setShowFaturatInternetit] = useState()
+  const [faturaInternetitPerdorues, setFaturaInternetitPerdorues] = useState()
   useEffect(()=>{
       let name = "cname" + "=";
       
@@ -64,6 +67,10 @@ function Profili() {
         })
         axios.get("https://localhost:7208/api/Pagesats/personal/payment/"+response.data.numriPersonal).then(response=>{
         setGjobatEPaguara(response.data)
+         })
+         axios.get('https://localhost:7000/api/Faturas/fatura/perdoruesit/'+response.data.numriPersonal).then(response=>{
+          setFaturaInternetitPerdorues(response.data)
+          console.log(response.data)
          })
         })
       
@@ -101,7 +108,10 @@ function Profili() {
       setPatentShoferi(false)
     }
   }
-
+  const shfaqFaturat = () =>{
+    setShowFaturatInternetit(true)
+    setMainDiv(false)
+  }
   const paguaj = () => {
     if(user.numriKarteles!=numriKarteles){
       setErrorMessage("Numri i karteles eshte gabim")
@@ -124,8 +134,8 @@ function Profili() {
         console.log(response.data)
         axios.post("https://localhost:7208/api/Pagesats/konfirmo/pagesen/"+user.emri+"/"+user.mbiemri+"/"+Customer.amount+"/"+pershkrimi+"/"+user.emaili).then(response=>{
           setErrorMessage("")
-          setSuccessMessage("Pagesa u realizua me sukses!")
           console.log(response.data)
+          window.location.href="http://localhost:3000/success"
         })
         setShowM(false)
       })
@@ -144,12 +154,13 @@ function Profili() {
               <li className='breadcrumb-item'>
               <i className="bi bi-bell-fill"></i>
               <NavDropdown title="" id="collasible-nav-dropdown">
-              <NavDropdown.Item onClick={()=>{setShfaqPatenten(true);setMainDiv(false)}}>Shiko patent shoferin</NavDropdown.Item>
-              <NavDropdown.Item onClick={()=>{setShfaqPatenten(false);setMainDiv(true)}}>
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(true);setMainDiv(false);setShowFaturatInternetit(false)}}>Shiko patent shoferin</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(false);setMainDiv(true);setShowFaturatInternetit(false)}}>
                 Profili
               </NavDropdown.Item>
               <NavDropdown.Item onClick={()=>logOut()}>Log out</NavDropdown.Item>
               <NavDropdown.Divider />
+              <NavDropdown.Item onClick={()=>shfaqFaturat()}>Faturat e Internetit</NavDropdown.Item>
             </NavDropdown>
               </li>
             </ol>
@@ -299,6 +310,11 @@ function Profili() {
         </div>
     </div>
     {patenten && <ShikoPatentenModal perdoruesi={patenta!=undefined ? patenta : ""}/> }
+    {shfaqFaturatInternetit && 
+      <Context.Provider value={faturaInternetitPerdorues}>
+        <FaturaIpkoUser user={user} email={user.emaili}/>
+        </Context.Provider>
+    } 
      </> : 
      <>
       <div className='p-error'>
@@ -318,8 +334,8 @@ function Profili() {
           <Form>
             <Form.Group>
               <Form.Label>Pagese per:</Form.Label>
-              <select className='form-control' onChange={(e)=>setAddDescription(e.value.target)}>
-                <option placeholder='Zgjedh nje nga kompanitë'></option>
+              <select className='form-control' onChange={(e)=>setAddDescription(e.target.value)}>
+                <option>Zgjedh njeren nga kompanitë</option>
                 <option value="Internet">Internet - IPKO </option>
                 <option value="Uji">Uji - Hidro Regjioni</option>
                 <option value="Mbeturina">Mbeturina - Eko Regjioni</option>
@@ -349,7 +365,7 @@ function Profili() {
           <Modal.Header className="stripe">
             <Modal.Title className='text-center invisible'>Order Details</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='modal-payment-body'>
             
            <Form>
            
@@ -357,14 +373,14 @@ function Profili() {
             <MDBInput wrapperClass='mb-4' className='mr-5 mt-4' label='Numri i karteles'  id='formControlLg' type='email' size="sm" onChange={(e)=>setNumriKarteles(e.target.value)}/>
             <div className='d-flex'>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='Expiration' placeholder='MM/YY' id='formControlLg' type='email' size="sm" onChange={(e)=>setExpiration(e.target.value)}/>
-              <MDBInput wrapperClass='mb-4' className='mr-5' label='CVC' id='formControlLg' placeholder='CVC' type='email' size="sm" onChange={(e)=>setCVC(e.target.value)}/>
+              <MDBInput wrapperClass='mb-4' className='mr-5' label='CVC' id='formControlLg' placeholder='CVC' type='password' size="sm" onChange={(e)=>setCVC(e.target.value)}/>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='Pagesa' id='formControlLg' type='email' size="sm" value={pagesa+"€"} disabled />
             </div>
             <p className=" pb-lg-2 " style={{color: '#393f81'}}>Don't have an account? </p>
            </Form>
            <p className="text-danger">{errorMessage}</p>
           </Modal.Body>
-          <Modal.Footer className="payment">
+          <Modal.Footer className="payment-modal modal-payment-body">
             <Button variant="secondary" onClick={()=> setFirstPage(true)}>
              Prapa
             </Button>

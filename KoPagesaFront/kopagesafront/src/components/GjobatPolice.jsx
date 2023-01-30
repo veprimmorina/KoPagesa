@@ -11,7 +11,7 @@ function GjobatPolice() {
         axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/"+numripersonal).then(response=>{
             setGjobat(response.data)
         })
-    })
+    },[])
   return (
     <div className='fined text-center'>
     <b>{gjoba.pershkrimi}</b>

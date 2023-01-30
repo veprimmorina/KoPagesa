@@ -9,7 +9,7 @@ function Denimi() {
         axios.get("https://localhost:7000/api/Gjoba/"+id).then(response=>{
             setData(response.data)
         })
-    })
+    },[])
   return (
    <>
     { 

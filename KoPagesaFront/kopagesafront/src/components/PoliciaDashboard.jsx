@@ -12,10 +12,14 @@ import Statistikat from './Statistikat'
 import StatistikatBar from './StatistikatBar'
 import * as Icon from 'react-bootstrap-icons';
 import { CanvasJSChart } from 'canvasjs-react-charts'
+import { useContext } from 'react'
+import DashboardLogIn, { Context } from './DashboardLogIn'
 
 
 
-function PoliciaDashboard() {
+function PoliciaDashboard({token}) {
+
+  const email = useContext(Context)
   const [showPatenta, setShowPatenta]=useState(false)
   const [statistikat, setStatistikat] = useState(true)
   const [showDenimet, setShowDenimet] = useState(false)
@@ -120,7 +124,7 @@ function PoliciaDashboard() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            
+        
           </Nav>
           <Nav className="me-auto">
             <Nav.Link onClick={()=> patentShoferi()} className="text-warning"><Icon.CreditCard color='white' size="20"/>Patenti</Nav.Link>
@@ -128,6 +132,7 @@ function PoliciaDashboard() {
             <Nav.Link  onClick={()=> denimetPaguar()} className="text-warning"><Icon.CheckSquare color='white' size='20' />Denimet e paguara</Nav.Link>
             <Nav.Link  onClick={()=> denimetPaPaguar()} className="text-warning"><Icon.Archive color='white' size='20' />Denimet e Papaguara</Nav.Link>
             <Nav.Link  onClick={()=> statistikatMujore()} className="text-warning"><Icon.Speedometer2 color='white' size='20' />Statistikat mujore</Nav.Link>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -142,6 +147,7 @@ function PoliciaDashboard() {
              <div className='row mt-5 '>
               <div className='col-md'>
               <Karta  title={"Numri i gjobave"} value={stats!=undefined ? stats[0] : "0"} />
+              <p>{email}</p>
               </div>
               <div className='col-md'>
               <Karta  title={"Gjoba pa paguar"} value={stats!=undefined ? stats[1] : "0"} />

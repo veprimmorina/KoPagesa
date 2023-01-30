@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MDBInput } from 'mdb-react-ui-kit'
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
-import { format } from 'date-fns'
+import { format, setDate } from 'date-fns'
 import { useEffect } from 'react'
 
 
@@ -10,11 +10,13 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
     const [showM,setShowM] = useState(false)
     const [firstPage, setFirstPage] = useState(true)
     const [dataCheck,setDat] = useState()
+    const [perPagese, setPerPagese] = useState()
     const handleClose = () => {
         setShowM(false)
       }
     const kryejPagesen = () => {
         setShowM(true)
+        console.log(dataCheck[0])
     }
     const paguajFaturen = () => {
         setFirstPage(false)
@@ -23,6 +25,7 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
     var date = format(dat, 'dd/mm/yyyy');
    useEffect(()=>{
     axios.get("https://localhost:7000/api/Gjoba/get/older/"+gjoba.id).then(response=>{
+      response.data.length<19 ? setDat([1],[3]) :
       setDat(response.data.split("."))
       console.log(response.data.split("."))
     })
@@ -36,7 +39,7 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
             receiptEmail: gjobaE,
             description: " Pagese per gjobe",
             currency: "EUR",
-            amount: gjobaPerPagese.denimi*100
+            amount: dataCheck[0]>=0 && dataCheck[0]<=14 ? ((gjobaPerPagese.denimi/2)*100) : gjobaPerPagese.denimi*100
           }
           axios.post("https://localhost:7208/api/Stripe/payment/add",Customer).then(response=>{
             console.log(response.data)
@@ -44,7 +47,7 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
               
               console.log(response.data)
               var Fatura = {
-                shuma: gjobaPerPagese.denimi,
+                shuma: dataCheck[0]>=0 && dataCheck[0]<=14 ? ((gjobaPerPagese.denimi/2)*100) : gjobaPerPagese.denimi*100,
                 nrPersonal: gjobaPerPagese.nrPersonal,
                 emri: gjobaEm,
                 mbiemri: gjobaMb,
@@ -54,6 +57,7 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
               }
               axios.post("https://localhost:7208/api/Pagesats/gjoba",Fatura).then(response=>{
                 console.log(response.data)
+                window.location.href('http://localhost:3000/success')
             })
             setShowM(false)
             })
@@ -127,7 +131,7 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
            </Form>
            <p className="text-danger"></p>
           </Modal.Body>
-          <Modal.Footer className="payment">
+          <Modal.Footer className="payment-modal">
             <Button variant="secondary" onClick={()=> setFirstPage(true)}>
              Prapa
             </Button>

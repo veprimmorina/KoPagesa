@@ -9,6 +9,14 @@ function Statistikat({gjoba,gjobap,gjobapp,gjobas}) {
         {name: "Gjoba pa paguar", value: +gjobapp},
         {name: "Gjoba sot", value: +gjobas},
       ]
+      /*
+      const data = [
+        {name: "a", value: 5},
+        {name: "b", value: 10},
+        {name: "c", value: 15},
+        {name: "d", value: 20},
+      ]
+      */
   return (
     <div>
          <PieChart width={400} height={400}>
