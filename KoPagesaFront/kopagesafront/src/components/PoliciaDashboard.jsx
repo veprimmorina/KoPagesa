@@ -31,15 +31,24 @@ function PoliciaDashboard({token}) {
   const [muaji, setMuaji] = useState()
   const [muajiStats, setMuajiStats] = useState()
   const [MuajiPatentaStats,setMuajiPatentaStats]= useState()
+  const [user, setUser] = useState('')
+  const [userDetails, setUserDetails] = useState();
 
   useEffect(()=>{
+    const storedList = JSON.parse(localStorage.getItem("extra"));
+        axios.get('https://localhost:7235/decode/'+storedList.map(tok=>(tok.authToken))).then(response=>{
+          setUser(response.data)
+          axios.get('https://localhost:7235/set/'+storedList.map(tok=>(tok.authToken))+"/"+response.data).then(response=>{
+            localStorage.setItem('UserP',JSON.stringify(response.data))
+            setUserDetails(response.data)    
+          })
+        })
     axios.get("https://localhost:7000/api/Gjoba/get/stats").then(response=>{
       setStats(response.data.split(";"))
     })
     axios.get("https://localhost:7235/api/Patenta/get/total").then(response=>{
       setPatentaStats(response.data.split(";"))
     })
-
   },[])
   const options = {
     exportEnabled: true,
@@ -115,16 +124,22 @@ function PoliciaDashboard({token}) {
       setMuajiPatentaStats(response.data.split(";"))
     })
   }
+  const ckycku = () => {
+    localStorage.setItem('extra','')
+    localStorage.setItem('UserP','')
+    window.location.href='http://localhost:3000/'
+  }
   
   return (
     <>
-    <Navbar collapseOnSelect expand="lg" variant="dark" style={{backgroundColor: "#4c0bce"}}>
+    {user!="" && (userDetails!=undefined ? userDetails.emaili==user : "") ?
+    <>
+    <Navbar collapseOnSelect expand="lg" variant="dark" style={{backgroundColor: "#4c0bce"}} className="shadow pt-3">
       <Container>
         <Navbar.Brand href="#home" className='text-warning'>Policia</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-        
           </Nav>
           <Nav className="me-auto">
             <Nav.Link onClick={()=> patentShoferi()} className="text-warning"><Icon.CreditCard color='white' size="20"/>Patenti</Nav.Link>
@@ -132,8 +147,10 @@ function PoliciaDashboard({token}) {
             <Nav.Link  onClick={()=> denimetPaguar()} className="text-warning"><Icon.CheckSquare color='white' size='20' />Denimet e paguara</Nav.Link>
             <Nav.Link  onClick={()=> denimetPaPaguar()} className="text-warning"><Icon.Archive color='white' size='20' />Denimet e Papaguara</Nav.Link>
             <Nav.Link  onClick={()=> statistikatMujore()} className="text-warning"><Icon.Speedometer2 color='white' size='20' />Statistikat mujore</Nav.Link>
-            
           </Nav>
+          <NavDropdown title={userDetails != undefined ? userDetails.emaili : "!"} className='text-white'>
+            <NavDropdown.Item onClick={()=> ckycku()}>Ckyçu</NavDropdown.Item>
+          </NavDropdown>
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -224,6 +241,9 @@ function PoliciaDashboard({token}) {
           </div>
         </div>
       </div>
+    </>
+   : <p></p> 
+   }
     </>
   )
 }

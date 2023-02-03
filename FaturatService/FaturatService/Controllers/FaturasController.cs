@@ -117,7 +117,18 @@ namespace FaturatService.Controllers
             _context.Update(fatura);
             await _context.SaveChangesAsync();
             return Ok();
-        } 
+        }
+        [HttpGet("add/{n1}/{n2}")]
+        public IActionResult Get(int n1,int n2)
+        {
+            return Content((n1 - n2).ToString());
+        }
+
+        [HttpGet("merr/pagesat/ipko")]
+        public async Task<ActionResult<IEnumerable<Fatura>>> GetPagesatIpko()
+        {
+            return await _context.Fatura.Where(x => x.Adresa.Equals("IPKO") && x.EPaguar.Equals(true)).ToListAsync();
+        }
         private bool FaturaExists(int id)
         {
             return _context.Fatura.Any(e => e.Id == id);
