@@ -13,8 +13,6 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
 using Syncfusion.Pdf.Graphics;
-
-
 using Syncfusion.Pdf;
 using Syncfusion.HtmlConverter;
 namespace KoPagesa.Controllers
@@ -211,6 +209,7 @@ namespace KoPagesa.Controllers
 
             //Create memory stream
             MemoryStream stream = new MemoryStream();
+            
 
             //Save the document
             document.Save(stream);
