@@ -111,7 +111,7 @@ namespace KoPagesa.Controllers
         [HttpPost]
         public async Task<ActionResult<Perdoruesi>> PostPerdoruesi(Perdoruesi perdoruesi)
         {
-            var p=await _perdoruesiFactory.createPerdorues(perdoruesi,perdoruesi.Roli);
+            var p=await _perdoruesiFactory.createPerdorues(perdoruesi);
             _context.perdoruesi.Add(p);
             await _context.SaveChangesAsync();
 
@@ -249,32 +249,30 @@ namespace KoPagesa.Controllers
             return Ok();
         }
         [HttpGet("polymorphism/interneti")]
-        public void getSherbimiInternetit()
+        public async Task<string> getSherbimiInternetit()
         {
-           /* Biznesi b = new KompaniaInternetit(,"","","","","","","");
+            Biznesi b = new KompaniaInternetit(100,"","","","","",5,5,20.0);
             return b.sherbimi();
-           */
+           
         }
         [HttpGet("polymorphism/uji")]
-        public void getSherbimiUjit()
+        public async Task<string> getSherbimiUjit()
         {
-            /*
-            Biznesi b = new KompaniaUjit();
-            return b.sherbimi();
-            */
+            
+            Biznesi b = new KompaniaUjit(100,"","","","","",5,2,20.4);
+            return  b.sherbimi();
+            
         }
         [HttpGet("polymorphism/mbeturinat")]
-        public void getSherbimiMbeturinave()
+        public async Task<string> getSherbimiMbeturinave()
         {
-            /*
-            Biznesi b = new KompaniaMbeturinave();
+            Biznesi b = new KompaniaMbeturinave(100, "", "", "", "", "", 5, 5, 20);
             return b.sherbimi();
-            */
         }
         [HttpGet("download/manual")]
         public async Task<IActionResult> GetManual()
         {
-            var path = "C:\\Users\\TECHCOM\\Downloads\\Untitled design.png";
+            var path = "C:\\Users\\TECHCOM\\Downloads\\Manuali.pdf";
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
             {
@@ -294,6 +292,18 @@ namespace KoPagesa.Controllers
             }
             string token = createToken(req);
             return perdoruesi.Roli.Equals(2) ? Ok(token) : BadRequest("Not Authorized");
+        }
+        [HttpGet("add/{n1}/{n2}")]
+        public IActionResult Add(int n1, int n2)
+        {
+            HttpClient client = new HttpClient();
+            string url = string.Format("https://localhost:7000/api/Faturas/add/"+n1+"/"+n2);
+            HttpResponseMessage message = client.GetAsync(url).Result;
+            if (message.IsSuccessStatusCode)
+            {
+                return new JsonResult("Result is "+message.Content.ReadAsStringAsync().Result);
+            }
+            throw new KoPagesaException("Komunikimi nuk eshte i mundshem");
         }
 
         private bool PerdoruesiExists(int id)
