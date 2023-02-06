@@ -118,16 +118,14 @@ function GjobatId({gjoba,gjobaKI,gjobaE,gjobaEm,gjobaMb}) {
           </Modal.Header>
           <Modal.Body>
            <Form>
-            <Form.Group>
-              <Form.Label>Stripe Id:</Form.Label>
-              <MDBInput wrapperClass='mb-4' className='mr-5'  id='formControlLg' type='email' size="sm"/>            </Form.Group>
+            
             <MDBInput wrapperClass='mb-4' className='mr-5 mt-4' label='Numri i karteles'  id='formControlLg' type='email' size="sm"/>
             <div className='d-flex'>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='Expiration' placeholder='MM/YY' id='formControlLg' type='email' size="sm"/>
               <MDBInput wrapperClass='mb-4' className='mr-5' label='CVC' id='formControlLg' placeholder='CVC' type='email' size="sm" />
               <MDBInput wrapperClass='mb-4' className='mr-5' label='Pagesa' id='formControlLg' type='email' size="sm" value={dataCheck[0]>=0 && dataCheck[0]<=14 ? gjoba.denimi /2 +" €": gjoba.denimi+" €"} disabled readOnly/>
             </div>
-            <p className=" pb-lg-2 " style={{color: '#393f81'}}>Don't have an account? </p>
+            <p className=" pb-lg-2 " style={{color: '#393f81'}}>Mundesuar nga KOPagesa</p>
            </Form>
            <p className="text-danger"></p>
           </Modal.Body>

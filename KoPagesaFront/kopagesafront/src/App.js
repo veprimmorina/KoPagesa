@@ -26,6 +26,7 @@ import Suses from "./components/Suses";
 import IpkoDashboard from "./components/IpkoDashboard";
 import DashboardNavbar from "./components/DashboardNavbar";
 import FaturaIpkoUser from "./components/FaturaIpkoUser";
+import KompaniaLogIn from "./components/KompaniaLogIn";
 
 
 
@@ -54,6 +55,7 @@ return(
       <Route path="nr" element={<NumberContext />}></Route>
       <Route path="success" element={<Suses />}></Route>
       <Route path="dashboard/internet" element={<DashboardNavbar />}></Route>
+      <Route path="login/kompania" element={<KompaniaLogIn />}></Route>
       <Route path="t" element={<FaturaIpkoUser />}></Route>
     </Routes>
   </BrowserRouter>

@@ -1,7 +1,18 @@
-import React from 'react'
+import axios from 'axios'
+import React, { createContext, useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
+import PagesatIpko from './PagesatIpko'
+
+export const InternetContext = createContext()
 function InternetTabela() {
+
+  const [pagesat, setPagesat ] = useState()
+  useEffect(()=>{
+    axios.get("https://localhost:7000/api/Faturas/merr/pagesat/ipko").then(response=>{
+      setPagesat(response.data)
+    })
+  },[])
   return (
     <Table striped hover >
         <thead>
@@ -13,12 +24,9 @@ function InternetTabela() {
             </tr>  
         </thead>        
         <tbody>
-            <tr>
-            <td>a</td>
-            <td>ab</td>
-            <td>abc</td>
-            <td><Button><Icon.Receipt size={20}/></Button></td>
-            </tr>
+          <InternetContext.Provider value={pagesat}>
+            <PagesatIpko />  
+          </InternetContext.Provider>            
         </tbody>
     </Table>
   )

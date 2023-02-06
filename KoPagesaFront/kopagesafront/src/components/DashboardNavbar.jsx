@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { createContext } from 'react';
 import { useState,useContext } from 'react';
+import { NavDropdown } from 'react-bootstrap';
 import IpkoDashboard from './IpkoDashboard';
 
 export const Context = createContext();
@@ -11,6 +12,11 @@ function DashboardNavbar() {
     useEffect(()=>{
         console.log('ok')
     },[shtoFaturen])
+    const logOut = () =>{
+      localStorage.setItem('control','')
+      localStorage.setItem('User','')
+      window.location.href='http://localhost:3000/'
+    }
   return (
     <>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -150,6 +156,9 @@ function DashboardNavbar() {
           </li>
         </ul>
       </li>
+      <NavDropdown title="Më shumë" id="collasible-nav-dropdown">
+        <NavDropdown.Item  onClick={()=>logOut()}>Log Out</NavDropdown.Item>
+      </NavDropdown>
       <li class="nav-item dropdown me-3 me-lg-1">
         <a
           class="nav-link dropdown-toggle hidden-arrow"
