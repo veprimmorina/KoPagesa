@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using FaturatService;
 using FaturatService.Models;
 using FaturatService.Services;
+using Newtonsoft.Json;
+using System.Text;
+using System.Dynamic;
 
 namespace FaturatService.Controllers
 {
@@ -117,6 +120,31 @@ namespace FaturatService.Controllers
             _context.Update(fatura);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+        [HttpPost("fatura/paguaj/{id}/{emri}/{mbiemri}")]
+        public async Task<IActionResult> PaguajFaturenId(int id, string emri, string mbiemri)
+        {
+            var fatura = await _context.Fatura.FindAsync(id);
+            fatura.EPaguar = true;
+            _context.Update(fatura);
+            await _context.SaveChangesAsync();
+            dynamic pagesa = new ExpandoObject();
+            pagesa.Shuma = fatura.Denimi;
+            pagesa.NrPersonal = fatura.NrPersonal;
+            pagesa.Emri = emri;
+            pagesa.Mbiemri = mbiemri;
+            pagesa.LlojiPageses = "Internet";
+            pagesa.pagesaPer = 1;
+            pagesa.pershkrimi = fatura.Pershkrimi;
+
+            
+            var json = JsonConvert.SerializeObject(pagesa);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            string url = "https://localhost:7208/api/Pagesats/internet";
+            using var client = new HttpClient();
+            var response = await client.PostAsync(url, data);
+            var result = await response.Content.ReadAsStringAsync();
+            return Ok(result);   
         }
         [HttpGet("add/{n1}/{n2}")]
         public IActionResult Get(int n1,int n2)

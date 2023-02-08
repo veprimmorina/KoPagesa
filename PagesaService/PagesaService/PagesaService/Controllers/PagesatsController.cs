@@ -115,9 +115,8 @@ namespace PagesaService.Controllers
             return NoContent();
         }
         [HttpPost("konfirmo/pagesen/{emri}/{mbiemri}/{shuma}/{pershkrimi}/{email}")]
-        public async Task<IActionResult> KonfirmoPagesen(string emri, string mbiemri, string shuma, string pershkrimi, string email)
+        public async Task<IActionResult> KonfirmoPagesen(string emri, string mbiemri, int shuma, string pershkrimi, string email)
         {
-            int shumaI= int.Parse(shuma);
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("kopagesa@gmail.com");
             

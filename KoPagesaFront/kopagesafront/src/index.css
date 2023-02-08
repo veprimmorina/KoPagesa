@@ -424,3 +424,13 @@ hr {
 #container {
   background-color: #dcdcdc;
 }
+.bg-image{
+  background-image: url('https://reciprocity.com/wp-content/uploads/2022/01/blog_digital-banking-challenges_featured-img_730x270_small.jpg');
+  background-size: 100%;
+   background-repeat: no-repeat;
+   background-position-y:center;
+  
+}
+.ic{
+  margin-right: 4px;
+}

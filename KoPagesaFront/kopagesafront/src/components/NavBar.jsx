@@ -3,7 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import img1 from '../images/karta-removebg-preview.png'
+import img2 from '../images/pay.jpg'
 import * as Icon from 'react-bootstrap-icons';
+
 import {
     MDBNavbar,
     MDBNavbarNav,
@@ -54,9 +57,12 @@ function NavBar() {
   
     return (
       <header>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      
       <Container>
-        <Icon.CreditCardFill color='yellow' size="30" /><Navbar.Brand href="#home">KoPagesa</Navbar.Brand>
+      <img src={img1} width={50} className='mr-3'/>
+       <Navbar.Brand href="#home">KoPagesa</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -77,11 +83,11 @@ function NavBar() {
           <Nav>
             {showU==false ? 
             <NavDropdown title="Menu" id="collasible-nav-dropdown">
-            <Link to={"/profili"} className='dropdown-item'>Profili</Link>
+            <Link to={"/profili"} className='dropdown-item'><Icon.Person color='blue' className='ic'/>Profili</Link>
             
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={()=>logOut()}>
-              Ckycu
+            <Icon.ArrowDownLeft color='blue' className='ic'/>Ckycu
             </NavDropdown.Item>
           </NavDropdown>
             : 
@@ -98,13 +104,12 @@ function NavBar() {
         <div
           id='intro-example'
           className='p-5 text-center bg-image'
-          style={{ backgroundImage: "url('https://www.balkanweb.com/wp-content/uploads/2020/04/PAGUAJ_EP.png')" }}
-        >
+         >
           <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
             <div className='d-flex justify-content-center align-items-center h-100'>
               <div className='text-white'>
-                <h1 className='mb-3'>KoPagesa Kosovë</h1>
-                <h5 className='mb-4'>Paguaj dhe kontrollo online sherbimet kryesore</h5>
+                <h1 className='mb-3 text-primary'>KoPagesa Kosovë</h1>
+                <h5 className='mb-4 text-warning'>Paguaj dhe kontrollo online sherbimet kryesore</h5>
                 <MDBBtn
                   className="m-2"
                   tag="a"

@@ -57,14 +57,15 @@ function Profili() {
         }
       }
       axios.get("https://localhost:7235/api/Klienti/decrypt/"+cn).then(response=>{
-          setUser(response.data)  
-          setNjoftimet(response.data.njoftimet)
+          setUser(response.data)
+            
+          axios.get("https://localhost:7235/api/Patenta/get/patenta/numri/"+response.data.numriPersonal).then(res=>{
+          setPatenta(res.data)
+        })
         axios.get("https://localhost:7000/api/Gjoba/gjoba/numri/"+response.data.numriPersonal).then(response=>{
           setGjobat(response.data)
         })
-        axios.get("https://localhost:7235/api/Patenta/get/patenta/numri/12345678910").then(response=>{
-          setPatenta(response.data)
-        })
+        
         axios.get("https://localhost:7208/api/Pagesats/personal/payment/"+response.data.numriPersonal).then(response=>{
         setGjobatEPaguara(response.data)
          })
@@ -130,14 +131,29 @@ function Profili() {
         currency: "EUR",
         amount: pagesa*100
       }
+      var Pagesa = {
+        shuma: Customer.amount/100,
+        nrPersonal: user.numriPersonal,
+        emri: user.emri,
+        mbiemri: user.mbiemri,
+        llojiPageses: "Test",
+        pagesaPer: 0,
+        pershkrimi: pershkrimi
+      }
       axios.post("https://localhost:7208/api/Stripe/payment/add",Customer).then(response=>{
         console.log(response.data)
         axios.post("https://localhost:7208/api/Pagesats/konfirmo/pagesen/"+user.emri+"/"+user.mbiemri+"/"+Customer.amount+"/"+pershkrimi+"/"+user.emaili).then(response=>{
           setErrorMessage("")
+      
           console.log(response.data)
-          window.location.href="http://localhost:3000/success"
+          axios.post("https://localhost:7208/api/Pagesats/"+(addDescription=="Internet" ? "internet" : "mbeturina"),Pagesa).then(response=>{
+            console.log(response.data)
+            setShowM(false)
+            window.location.href="http://localhost:3000/success"
+          })
+          
         })
-        setShowM(false)
+       
       })
     }
   }
@@ -148,19 +164,20 @@ function Profili() {
     <div class="main-body">
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item"><a >User</a></li>
-              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+              <li class="breadcrumb-item"><a href="index.html">KOPagesa</a></li>
+              <li class="breadcrumb-item"><a >Profili</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Te dhenat</li>
               <li className='breadcrumb-item'>
               <i className="bi bi-bell-fill"></i>
-              <NavDropdown title="" id="collasible-nav-dropdown">
-              <NavDropdown.Item onClick={()=>{setShfaqPatenten(true);setMainDiv(false);setShowFaturatInternetit(false)}}>Shiko patent shoferin</NavDropdown.Item>
-              <NavDropdown.Item onClick={()=>{setShfaqPatenten(false);setMainDiv(true);setShowFaturatInternetit(false)}}>
+              <NavDropdown title="Më shumë" id="collasible-nav-dropdown">
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(true);setMainDiv(false);setShowFaturatInternetit(false)}}><Icon.CreditCard className='ic' color='blue'/>Shiko patent shoferin</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>{setShfaqPatenten(false);setMainDiv(true);setShowFaturatInternetit(false)}}><Icon.Person className='ic' color='blue'/>
                 Profili
               </NavDropdown.Item>
-              <NavDropdown.Item onClick={()=>logOut()}>Log out</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>shfaqFaturat()}><Icon.Receipt color='blue' className='ic'/>Faturat e Internetit</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={()=>shfaqFaturat()}>Faturat e Internetit</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>logOut()}><Icon.BoxArrowDownLeft color='blue' className='ic'/>Ckycu</NavDropdown.Item>
+
             </NavDropdown>
               </li>
             </ol>
@@ -177,8 +194,8 @@ function Profili() {
                     <div class="mt-3">
                       <h4>{user!=undefined ? user.emri+" "+user.mbiemri : ""}</h4>
                       <p class="text-secondary mb-1">Klient</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                      <button class="btn btn-primary">Follow</button>
+                      <p class="text-muted font-size-sm">Kosovë</p>
+                      <button class="btn btn-primary">Perditeso profilin</button>
                       <Link to={'/12345678910'}><button class="btn btn-outline-primary" >Patent shoferi im</button></Link>
                     </div>
                   </div>
@@ -214,7 +231,7 @@ function Profili() {
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Full Name</h6>
+                      <h6 class="mb-0">Emri dhe mbiemri</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       {user!=undefined ? user.emri+" " +user.mbiemri : <p></p>}
@@ -232,19 +249,19 @@ function Profili() {
                   
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Phone</h6>
+                      <h6 class="mb-0">Numri telefonit</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      (239) 816-9029
+                      N/A
                     </div>
                   </div>
                   
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Mobile</h6>
+                      <h6 class="mb-0">Mobil</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      (320) 380-4539
+                      N/A
                     </div>
                   </div>
                   
@@ -257,7 +274,7 @@ function Profili() {
                     </div>
                   </div>
                  
-                  <div class="row">
+                  <div class="row text-center">
                     <div class="col-sm-12">
                       <a class="btn btn-info" onClick={()=>setShowM(true)}>Paguaj</a>
                     </div>
@@ -269,8 +286,8 @@ function Profili() {
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100 shadow">
                     <div class="card-body">
-                      <h6 class="d-flex align-items-center justify-content-between mb-3"><i class="material-icons text-info mr-2">assignment</i>Gjoba te papaguara</h6>
-                     {gjobat==null ? <p className='mt-5 pt-5 text-center'>Nuk keni asnje gjobe te papaguar</p> : <>
+                      <h6 class="d-flex align-items-center justify-content-between mb-3"><i class="material-icons text-info mr-2">aktivitet</i>Gjoba te papaguara</h6>
+                     {gjobat==null || gjobat=="" ? <p className='mt-5 pt-5 text-center'>Nuk keni asnje gjobe te papaguar</p> : <>
                        {user!=undefined ? 
                             //logjika
                        <Gjobat gjobaP={user.numriPersonal} gjobaKI={user.kartelaId} gjobaE={user.emaili} gjobaEm={user.emri} gjobaMb={user.mbiemri}/>  : <p></p>}
@@ -282,11 +299,9 @@ function Profili() {
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100 shadow sc">
                     <div class="card-body ">
-                      <h6 class="d-flex align-items-center justify-content-between mb-3"><i class="material-icons text-info mr-2">assignment</i>Pagesat e mia</h6>
-                      {gjobatEPaguara==null ? <p className='mt-5 pt-5 text-center'>Nuk keni asnje pagese te realizuar deri me tani</p> : <>
-                      <Button onClick={()=>interneti()}>Internet</Button>
-                      <Button onClick={()=>gjoba()}>Gjoba</Button>
-                      <Button onClick={()=>mbeturina()}>Mbeturinat</Button>
+                      <h6 class="d-flex align-items-center justify-content-between mb-3"><i class="material-icons text-info mr-2">aktivitete</i>Pagesat e mia</h6>
+                      {gjobatEPaguara==null || gjobatEPaguara=="" ? <p className='mt-5 pt-5 text-center'>Nuk keni asnje pagese te realizuar deri me tani</p> : <>
+                      
                       <div className='text-center'>
                         <b>{category}</b>
                       </div>
@@ -343,8 +358,7 @@ function Profili() {
               </Form.Group>
               <Form.Label>Shuma për pagesë:</Form.Label>
               <Form.Control type="text" onChange={(e)=>setPagesa(e.target.value)} placeholder="€"></Form.Control>
-              <Form.Label>Ora dhe data:</Form.Label>
-              <Form.Control type="text"></Form.Control>
+              
               <Form.Label >Pershkrimi:</Form.Label>
               <textarea className='form-control' onChange={(e)=>setPershkrimi(e.target.value)} placeholder="Shembull: Pagesa per muajin Janar 2023"></textarea>
             </Form>

@@ -179,11 +179,13 @@ namespace FaturatService.Controllers
             var gjoba = await _context.gjoba.FindAsync(id);
             var data = gjoba.Data;
 
-            var ex = DateTime.ParseExact(data, "yyyy-mm-dd", CultureInfo.InvariantCulture);
+            var ex = DateTime.ParseExact(data, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+           
             DateTime now = DateTime.Now;
-            return now - ex ;
+            return now - ex;
            
         }
+        
         [HttpGet("get/stats/month/{monthnumber}")]
         public async Task<string> getMonthStats(string monthnumber)
         {

@@ -32,14 +32,23 @@ function FaturaIpkoUser({user,email}) {
             currency: "EUR",
             amount: pagesa*100
           }
+          var Pagesa = {
+            shuma: pagesa,
+            nrPersonal: user.nrPersonal,
+            emri: user.emri,
+            mbiemri: user.mbiemri,
+            llojiPageses: "",
+            pagesaPer: 1,
+            pershkrimi: pershkrimi
+          }
           axios.post("https://localhost:7208/api/Stripe/payment/add",Customer).then(response=>{
             console.log(response.data)
-            axios.get('https://localhost:7000/api/Faturas/paguaj/faturen/'+fId).then(response=>{
+            axios.post('https://localhost:7000/api/Faturas/fatura/paguaj/'+fId+"/"+user.emri+"/"+user.mbiemri).then(response=>{
                 axios.post("https://localhost:7208/api/Pagesats/konfirmo/pagesen/"+user.emri+"/"+user.mbiemri+"/"+Customer.amount+"/"+Customer.description+"/"+user.emaili).then(response=>{
-              setErrorMessage("")
-              console.log(response.data)
-              setShowM(false)
-              window.location.href="http://localhost:3000/success"
+                setErrorMessage("")
+                console.log(response.data)
+                setShowM(false)
+                window.location.href="http://localhost:3000/success"
             })
             })            
           })
@@ -77,7 +86,7 @@ function FaturaIpkoUser({user,email}) {
 							<h5>Emri dhe mbiemri:  </h5><b>{user.emri+" "+user.mbiemri}</b>
 							<p><b>Numri Personal :</b> {fatura.nrPersonal}</p>
 							<p><b>Email :</b> {email}</p>
-							<p><b>Numri personal :</b> {}</p>
+							
 						</div>
 					</div>
 					

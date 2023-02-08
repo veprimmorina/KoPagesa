@@ -39,7 +39,6 @@ function IpkoDashboard() {
              <div className='row mt-5 '>
               <div className='col-md'>
              <Karta />
-              <p>{user}</p>
               <p>{userDetails.emaili==user}</p>
               </div>
               <div className='col-md'>

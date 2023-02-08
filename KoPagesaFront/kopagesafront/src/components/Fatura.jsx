@@ -23,8 +23,8 @@ function Fatura() {
         data!=undefined ?
     <div className={" page-content container pb-5 "+data.pagesaPer==2 ? "bg-warning" : data.pagesaPer==1 ? "bg-success" :  "bg-primary"}>
     <div class="page-header text-blue-d2 pb-5">
-        <h1 class="page-title text-secondary-d1 pb-5">
-            Gjoba 
+        <h1 class="page-title text-white pb-5">
+            {data.pagesaPer==0 ? "Gjoba " : "Pagesa "} 
             <small class="page-info">
                 <i class="fa fa-angle-double-right text-80 pb-5"></i>
                 Numri identifikues: {data.id}
@@ -77,8 +77,8 @@ function Fatura() {
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <div>
-                            <span class="text-sm text-grey-m2 align-middle">To:</span>
+                        <div className='text-white'>
+                            <span class="text-sm text-grey-m2 align-middle text-white">Gjeneruar nga sistemi:</span>
                             <span class="text-600 text-110 text-blue align-middle"></span>
                         </div>
                         <div class="text-grey-m2">
@@ -88,22 +88,22 @@ function Fatura() {
                             <div class="my-1">
                                 {data.koha}
                             </div>
-                            <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">111-452-525</b></div>
+                            <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600 text-white">111-452-525</b></div>
                         </div>
                     </div>
 
-                    <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                    <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end text-white">
                         <hr class="d-sm-none" />
                         <div class="text-grey-m2">
-                            <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-                                Gjobë
+                            <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125 text-white">
+                                {data!=undefined ? data.pagesaPer==0 ? "Gjobë": data.pagesaPer==1 ? "Fature interneti" : "Fature Eko Regjioni" : ""}
                             </div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> {data.id}</div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1 text-white"></i> <span class="text-600 text-90 text-white">ID:</span> {data.id}</div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Data e leshimit:</span> {data.data}</div>
+                            <div class="my-2 text-white"><i class="fa fa-circle text-blue-m2 text-xs mr-1 text-white"></i> <span class="text-600 text-90 text-white">Data e leshimit:</span><span className='text-white'> {data.data}</span></div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">E paguar</span></div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90 text-white">Status:</span> <span class="badge badge-warning badge-pill px-25">E paguar</span></div>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@ function Fatura() {
 
                     <div class="row mt-3">
                         <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                            Extra note such as company or payment information...
+                            Informacione shtese ne lidhje me pagesen
                         </div>
 
                         <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
@@ -139,7 +139,7 @@ function Fatura() {
                                 </div>
                                 <div class="col-5">
                                 
-                                    {data.pagesaPer==0 ? <span class="text-110 text-white">{data.shuma/2+"€"}</span> : <p></p>}
+                                    {data.pagesaPer==0 ? <span class="text-110 text-white"></span> : <p></p>}
                                 </div>
                             </div>
 
@@ -158,9 +158,8 @@ function Fatura() {
 
                     <hr />
 
-                    <div>
-                        <span class="text-secondary-d1 text-105">Thank you for your business</span>
-                        <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Pay Now</a>
+                    <div className='text-center'>
+                        <span class="text-secondary-d1 text-105 text-white">@2023 Gjeneruar nga sistemi KOPagesa</span>
                     </div>
                 </div>
             </div>

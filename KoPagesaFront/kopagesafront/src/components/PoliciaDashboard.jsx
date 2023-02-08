@@ -167,32 +167,28 @@ function PoliciaDashboard({token}) {
               <p>{email}</p>
               </div>
               <div className='col-md'>
-              <Karta  title={"Gjoba pa paguar"} value={stats!=undefined ? stats[1] : "0"} />
+              <Karta  title={"Gjoba pa paguar"} value={stats!=undefined ? stats[2] : "0"} />
               </div>
               </div>
               <div className='row mt-5 '>
               <div className='col-md'>
-              <Karta  title={"Gjoba te paguara"} value={stats!=undefined ? stats[2] : "0"} />
+              <Karta  title={"Gjoba te paguara"} value={stats!=undefined ? stats[1] : "0"} />
               </div>
-              <div className='col-md'>
-              <Karta  title={"Gjoba sot"} value={stats!=undefined ? stats[3] : "0"} />
-              </div>
-              </div>
-              <div className='row mt-5 '>
               <div className='col-md'>
               <Karta  title={"Patent shofer"} value={patentenStats!=undefined ? patentenStats[0] : "0"} />
+
+              </div>
+              </div>
+              <div className='row mt-5 '>
+              <div className='col-md'>
+              <Karta  title={"Aktive"} value={patentenStats!=undefined ? patentenStats[2] : "0"} />
               </div>
               <div className='col-md'>
               <Karta  title={"Te deaktivizuar"} value={patentenStats!=undefined ? patentenStats[1] : "0"} />
               </div>
               </div>
               <div className='row mt-5 '>
-              <div className='col-md'>
-              <Karta  title={"Aktive"} value={patentenStats!=undefined ? patentenStats[2] : "0"} />
-              </div>
-              <div className='col-md'>
-              <Karta  title={"Aktive"} value={patentenStats!=undefined ? patentenStats[2] : "0"} />
-              </div>
+              
               </div>
               </div>
               <div className='col ml-3'>

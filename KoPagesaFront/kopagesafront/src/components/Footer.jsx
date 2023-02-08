@@ -40,7 +40,7 @@ function Footer() {
                 <MDBRow className='d-flex justify-content-center'>
                   <MDBCol size="auto">
                     <p className='pt-2'>
-                      <strong>Sign up for our newsletter</strong>
+                      <strong>Na ndiqni ne rrjetet tona sociale</strong>
                     </p>
                   </MDBCol>
     
@@ -49,7 +49,7 @@ function Footer() {
                   </MDBCol>
     
                   <MDBCol size="auto">
-                    <MDBBtn outline color='light' type='submit' className='mb-4'>
+                    <MDBBtn outline color='light' type='submit' classNameName='mb-4'>
                       Subscribe
                     </MDBBtn>
                   </MDBCol>

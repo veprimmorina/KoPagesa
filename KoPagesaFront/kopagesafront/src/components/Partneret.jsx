@@ -9,12 +9,12 @@ function Partneret() {
 <div class="row">
 <div class="col-sm-6 col-md-4 col-lg-3">
 <div class="square-holder">
-<img alt="" src="https://www.kosovopolice.com/wp-content/uploads/2020/06/LOGO-NE-PDF-2048x2048-1-560x400.jpg" />
+<img alt="" src="https://www.kosovopolice.com/wp-content/uploads/2019/07/logo-1.png" />
 </div>
 </div>
 <div class="col-sm-6 col-md-4 col-lg-3">
 <div class="square-holder">
-<img alt="" src="https://www.logo.wine/a/logo/IPKO/IPKO-Logo.wine.svg" />
+<img alt="" src="https://www.ipko.com/wp-content/uploads/2017/03/logo.svg" />
 </div>
 </div>
 <div class="col-sm-6 col-md-4 col-lg-3">
@@ -29,7 +29,7 @@ function Partneret() {
 </div>
 <div class="col-sm-6 col-md-4 col-lg-3">
 <div class="square-holder">
-<img alt="" src="http://kosovalive.org/wp-content/uploads/2021/01/KRU-Prishtina.v1.jpg" />
+<img alt="" src="https://kru-prishtina.com/rz/wp-content/uploads/2021/08/cropped-logo-png.png" />
 </div>
 </div>
 <div class="col-sm-6 col-md-4 col-lg-3">

@@ -56,6 +56,7 @@ function PatentaTabela() {
       axios.get("https://localhost:7235/api/Patenta").then(response=>{
         setPatenta(response.data)
       })
+      alert('U shtua me sukses')
     }
   return (
     <>

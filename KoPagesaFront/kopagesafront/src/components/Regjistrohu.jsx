@@ -106,6 +106,7 @@ function Regjistrohu() {
         axios.post("https://localhost:7235/api/Klienti",Perdoruesi).then(response=>{
           console.log(response.data)
           setErrorMessage("")
+          window.location.href='http://localhost:3000'
       })
         })
        

@@ -40,7 +40,7 @@ function PatentetTabela({patenti}) {
         lloji: 0,
         pershkrimi: pershkrimi,
         nrPersonal: numriPersonal,
-        data: year+"-0"+month+"-"+date,
+        data: year+"-0"+month+"-0"+date,
         koha: time,
         adresa: adresa,
         denimi: pagesa,
