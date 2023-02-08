@@ -15,6 +15,10 @@ namespace KoPagesa
         public DbSet<Klienti> klienti { get; set; }
         public DbSet<Sherbyesi> sherbyesi { get; set; }
         public DbSet <Patenta> patenta { get; set;}
+        public DbSet<Policia> policia { get; set; }
+        public DbSet<KompaniaInternetit> kompaniaInternetit { get; set; }
+        public DbSet<KompaniaMbeturinave> kompaniaMbeturinave { get; set; }
+        public DbSet<KompaniaUjit> kompaniaUjit { get; set; }
 
 
     }

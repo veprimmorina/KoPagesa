@@ -3,6 +3,7 @@ using KoPagesa;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoPagesa.Migrations
 {
     [DbContext(typeof(PerdoruesitContext))]
-    partial class PerdoruesitContextModelSnapshot : ModelSnapshot
+    [Migration("20230203211545_Kompanite")]
+    partial class Kompanite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,62 +154,6 @@ namespace KoPagesa.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasDiscriminator().HasValue("Sherbyesi");
-                });
-
-            modelBuilder.Entity("KoPagesa.Models.KompaniaInternetit", b =>
-                {
-                    b.HasBaseType("KoPagesa.Models.Sherbyesi");
-
-                    b.Property<double>("ShpejtesiaInternetit")
-                        .HasColumnType("float");
-
-                    b.Property<string>("nrBiznesit")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasDiscriminator().HasValue("KompaniaInternetit");
-                });
-
-            modelBuilder.Entity("KoPagesa.Models.KompaniaMbeturinave", b =>
-                {
-                    b.HasBaseType("KoPagesa.Models.Sherbyesi");
-
-                    b.Property<int>("NumriKamioneve")
-                        .HasColumnType("int");
-
-                    b.Property<string>("nrBiznesit")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasDiscriminator().HasValue("KompaniaMbeturinave");
-                });
-
-            modelBuilder.Entity("KoPagesa.Models.KompaniaUjit", b =>
-                {
-                    b.HasBaseType("KoPagesa.Models.Sherbyesi");
-
-                    b.Property<double>("FaktoriPH")
-                        .HasColumnType("float");
-
-                    b.Property<string>("nrBiznesit")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasDiscriminator().HasValue("KompaniaUjit");
-                });
-
-            modelBuilder.Entity("KoPagesa.Models.Policia", b =>
-                {
-                    b.HasBaseType("KoPagesa.Models.Sherbyesi");
-
-                    b.Property<string>("StacioniPolicor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasDiscriminator().HasValue("Policia");
                 });
 #pragma warning restore 612, 618
         }
