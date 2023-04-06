@@ -6,6 +6,7 @@ The Internet and digitization are now taking an extraordinary jerk in our human 
 
 KOPagesa can not only be used to fulfill financial obligations but also by the Kosovo police service. Through this application, the Kosovo police service has full access to the fines and driver’s licenses of citizens. This unique capability and feature of the application makes it one-of-a-kind and the only one of its kind in our country.
 
+For a user who whants to use the application, first it is nessecary to create an account with their personal information.
 ![Screenshot 2023-04-06 132550](https://user-images.githubusercontent.com/65460301/230363660-a6fc5c44-8daa-44fe-958e-51fce871e3b8.png)
 ![Screenshot_20230122_115207](https://user-images.githubusercontent.com/65460301/230363912-385e69dc-3cce-4b0a-85a8-0d103dd0def0.png)
 ![Screenshot_20230122_115315](https://user-images.githubusercontent.com/65460301/230363963-69dbd988-0568-4f67-83e5-5299b3332c8a.png)
