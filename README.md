@@ -22,8 +22,7 @@ After succesfully registration, now new user can log into the system.
 
 <br />
 <br />
-For each user a new personalized profile will be provided.
-<br />
+For each user a new personalized profile will be provided.--
 ![Screenshot_20230203_105321](https://user-images.githubusercontent.com/65460301/230364019-1f4b40ae-1019-48f3-a6eb-b06c352346eb.png)
 <br />
 <br />
